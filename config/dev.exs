@@ -22,6 +22,12 @@ config :metaboard, MetaboardWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
+    postcss: [
+      "src/css/tailwind.css",
+      "-o",
+      "src/css/main.css",
+      cd: Path.expand("../assets", __DIR__)
+    ],
     node: [
       "node_modules/react-scripts/bin/react-scripts.js",
       "start",
