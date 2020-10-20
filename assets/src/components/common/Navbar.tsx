@@ -1,5 +1,12 @@
 import React from "react";
 
+import {
+  faBars,
+  faRocket,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export default function Navbar({transparent}: {transparent: boolean}) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 
@@ -13,8 +20,8 @@ export default function Navbar({transparent}: {transparent: boolean}) {
           " flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
         }
       >
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+        <div className="container flex flex-wrap items-center justify-between px-4 mx-auto">
+          <div className="relative flex justify-between w-full lg:w-auto lg:static lg:block lg:justify-start">
             <a
               className={
                 (transparent ? "text-white" : "text-gray-800") +
@@ -25,16 +32,14 @@ export default function Navbar({transparent}: {transparent: boolean}) {
               Metaboard
             </a>
             <button
-              className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              className="block px-3 py-1 text-xl leading-none bg-transparent border border-transparent border-solid rounded outline-none cursor-pointer lg:hidden focus:outline-none"
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <i
-                className={
-                  (transparent ? "text-white" : "text-gray-800") +
-                  " fas fa-bars"
-                }
-              ></i>
+              <FontAwesomeIcon
+                icon={faBars}
+                className={transparent ? "text-white" : "text-gray-800"}
+              />
             </button>
           </div>
           <div
@@ -44,7 +49,7 @@ export default function Navbar({transparent}: {transparent: boolean}) {
             }
             id="example-navbar-warning"
           >
-            <ul className="flex flex-col lg:flex-row list-none mr-auto">
+            <ul className="flex flex-col mr-auto list-none lg:flex-row">
               <li className="flex items-center">
                 <a
                   className={
@@ -67,7 +72,7 @@ export default function Navbar({transparent}: {transparent: boolean}) {
                 </a>
               </li>
             </ul>
-            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+            <ul className="flex flex-col list-none lg:flex-row lg:ml-auto">
               <li className="flex items-center">
                 <button
                   className={
@@ -79,7 +84,10 @@ export default function Navbar({transparent}: {transparent: boolean}) {
                   type="button"
                   style={{ transition: "all .15s ease" }}
                 >
-                  <i className="fas fa-arrow-alt-circle-down"></i> Get started
+                  <FontAwesomeIcon
+                    icon={faRocket}
+                    className="mr-1"
+                  /> Get started
                 </button>
               </li>
             </ul>
