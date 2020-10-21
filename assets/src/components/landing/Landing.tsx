@@ -22,7 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Landing() {
   return (
     <>
-      <Navbar transparent />
+      <Navbar />
       <main>
         <div className="relative flex items-center content-center justify-center pt-16 pb-32"
             style={{
@@ -330,7 +330,7 @@ export default function Landing() {
               <Link to="/signup">
                 <button
                   className={
-                    "bg-blue-600 text-white text-xl font-bold uppercase px-8 py-4 rounded shadow hover:bg-blue-700 active:bg-blue-500 outline-none focus:outline-none"
+                    "bg-blue-600 text-white text-xl font-bold uppercase px-8 py-4 rounded-full shadow hover:bg-blue-700 active:bg-blue-500 outline-none focus:outline-none"
                   }
                   type="button"
                   style={{ transition: "all .15s ease" }}

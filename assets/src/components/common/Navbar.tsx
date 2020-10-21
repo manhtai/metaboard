@@ -9,26 +9,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom"
 
 
-export default function Navbar({transparent}: {transparent: boolean}) {
+export default function Navbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   return (
     <>
       <nav
         className={
-          (transparent
-            ? "top-0 absolute z-50 w-full"
-            : "relative shadow-lg bg-white shadow-lg") +
-          " flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
+            "top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
         }
       >
         <div className="container flex flex-wrap items-center justify-between px-4 mx-auto">
           <div className="relative flex justify-between w-full lg:w-auto lg:static lg:block lg:justify-start">
             <a
-              className={
-                (transparent ? "text-white" : "text-gray-800") +
-                " text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase"
-              }
+              className="inline-block py-2 mr-4 text-sm font-bold leading-relaxed text-white uppercase whitespace-no-wrap"
               href="/"
             >
               Metaboard
@@ -40,7 +34,7 @@ export default function Navbar({transparent}: {transparent: boolean}) {
             >
               <FontAwesomeIcon
                 icon={faBars}
-                className={transparent ? "text-white" : "text-gray-800"}
+                className="text-white"
               />
             </button>
           </div>
@@ -54,21 +48,11 @@ export default function Navbar({transparent}: {transparent: boolean}) {
             <ul className="flex flex-col mr-auto list-none lg:flex-row">
               <li className="flex items-center">
                 <a
-                  className={
-                    (transparent
-                      ? "lg:text-white lg:hover:text-gray-300 text-gray-800"
-                      : "text-gray-800 hover:text-gray-600") +
-                    " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
-                  }
+                  className="flex items-center px-3 py-4 text-xs font-bold text-gray-800 uppercase lg:text-white lg:hover:text-gray-300 lg:py-2"
                   href="/"
                 >
                   <i
-                    className={
-                      (transparent
-                        ? "lg:text-gray-300 text-gray-500"
-                        : "text-gray-500") +
-                      " far fa-file-alt text-lg leading-lg mr-2"
-                    }
+                    className="mr-2 text-lg text-gray-500 lg:text-gray-300 far fa-file-alt leading-lg"
                   />{" "}
                   FAQ
                 </a>
@@ -79,10 +63,7 @@ export default function Navbar({transparent}: {transparent: boolean}) {
                 <Link to="/login">
                   <button
                     className={
-                      (transparent
-                        ? "bg-white text-gray-800 active:bg-gray-100"
-                        : "bg-pink-500 text-white active:bg-pink-600") +
-                      " text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md hover:bg-gray-200 outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
+                      "bg-white text-gray-800 active:bg-gray-100 text-xs font-bold uppercase px-4 py-2 rounded-full shadow hover:shadow-md hover:bg-gray-200 outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3"
                     }
                     type="button"
                   >
