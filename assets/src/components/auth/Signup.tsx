@@ -18,11 +18,11 @@ export default function Login() {
             <div className="flex items-center content-center justify-center h-full">
               <div className="w-10/12 max-w-lg px-8">
                 <div className="relative flex flex-col w-full min-w-0 mb-6 break-words">
-                  <h1 className="flex-auto p-2 text-2xl text-center">
-                    Welcome back!
+                  <h1 className="flex-auto p-2 text-3xl text-center">
+                    Create your account
                   </h1>
                   <p className="text-center">
-                    {"Log in to your Metaboard account:"}
+                    {"Metaboard is free and always will be!"}
                   </p>
                   <div className="flex-auto px-4 py-10 lg:px-10">
                     <form>
@@ -53,18 +53,18 @@ export default function Login() {
                           className="w-full px-6 py-3 mb-1 mr-1 font-bold text-white bg-blue-600 rounded-full outline-none active:bg-blue-500 hover:bg-blue-700 focus:outline-none"
                           type="button"
                         >
-                          Log In
+                          Sign Up
                         </button>
                       </div>
                     </form>
                   </div>
                   <p className="text-center">
-                    {"No account?"}
+                    {"Already have an account?"}
                     <Link
-                      to="/signup"
+                      to="/login"
                       className="ml-1 font-bold text-blue-600 hover:text-blue-700"
                     >
-                      Sign Up!
+                      Log In
                     </Link>
                   </p>
                 </div>

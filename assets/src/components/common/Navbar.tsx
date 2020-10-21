@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   faBars,
-  faRocket,
+  faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -87,9 +87,9 @@ export default function Navbar({transparent}: {transparent: boolean}) {
                     type="button"
                   >
                     <FontAwesomeIcon
-                      icon={faRocket}
+                      icon={faSignInAlt}
                       className="mr-1"
-                    /> Get started
+                    /> Log In
                   </button>
                 </Link>
               </li>

@@ -327,7 +327,7 @@ export default function Landing() {
               </div>
             </div>
             <div className="flex content-center justify-center mt-20">
-              <Link to="/login">
+              <Link to="/signup">
                 <button
                   className={
                     "bg-blue-600 text-white text-xl font-bold uppercase px-8 py-4 rounded shadow hover:bg-blue-700 active:bg-blue-500 outline-none focus:outline-none"
@@ -338,7 +338,7 @@ export default function Landing() {
                   <FontAwesomeIcon
                     icon={faRocket}
                     className="mr-1"
-                  /> Get started for Free
+                  /> Get started for Free!
                 </button>
               </Link>
             </div>
