@@ -2,6 +2,7 @@ import React from "react";
 
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
+import { Link } from "react-router-dom"
 
 import {
   faStopwatch,
@@ -189,7 +190,7 @@ export default function Landing() {
             </svg>
           </div>
 
-          <div className="container px-4 mx-auto">
+          <div className="container px-4 pt-4 pb-16 mx-auto">
             <div className="flex flex-wrap items-center">
               <div className="w-full px-4 ml-auto mr-auto md:w-4/12">
                 <img
@@ -258,7 +259,7 @@ export default function Landing() {
         </section>
 
 
-        <section className="relative block pb-20 bg-gray-900">
+        <section className="relative block pb-20 bg-gray-800">
           <div
             className="absolute top-0 left-0 right-0 bottom-auto w-full -mt-20 overflow-hidden pointer-events-none"
             style={{ height: "80px", transform: "translateZ(0)" }}
@@ -273,13 +274,13 @@ export default function Landing() {
               y="0"
             >
               <polygon
-                className="text-gray-900 fill-current"
+                className="text-gray-800 fill-current"
                 points="2560 0 2560 100 0 100"
               ></polygon>
             </svg>
           </div>
 
-          <div className="container px-4 mx-auto lg:pt-24 lg:pb-64">
+          <div className="container px-4 pt-10 pb-12 mx-auto">
             <div className="flex flex-wrap justify-center text-center">
               <div className="w-full px-4 lg:w-6/12">
                 <h2 className="text-4xl font-semibold text-white">
@@ -299,7 +300,7 @@ export default function Landing() {
                   Create
                 </h6>
                 <p className="mt-2 mb-4 text-gray-500">
-                  Choose a board type for your game or event
+                  Choose a board type for your game or event.
                 </p>
               </div>
               <div className="w-full px-4 text-center lg:w-3/12">
@@ -326,18 +327,20 @@ export default function Landing() {
               </div>
             </div>
             <div className="flex content-center justify-center mt-20">
-              <button
-                className={
-                  "bg-blue-600 text-white text-xl font-bold uppercase px-4 py-4 rounded shadow hover:bg-blue-500 outline-none focus:outline-none"
-                }
-                type="button"
-                style={{ transition: "all .15s ease" }}
-              >
-                <FontAwesomeIcon
-                  icon={faRocket}
-                  className="mr-1"
-                /> Get started
-              </button>
+              <Link to="/login">
+                <button
+                  className={
+                    "bg-blue-600 text-white text-xl font-bold uppercase px-8 py-4 rounded shadow hover:bg-blue-700 active:bg-blue-500 outline-none focus:outline-none"
+                  }
+                  type="button"
+                  style={{ transition: "all .15s ease" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faRocket}
+                    className="mr-1"
+                  /> Get started for Free
+                </button>
+              </Link>
             </div>
           </div>
         </section>
