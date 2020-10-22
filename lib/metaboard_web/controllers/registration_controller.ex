@@ -1,5 +1,7 @@
 defmodule MetaboardWeb.RegistrationController do
   use MetaboardWeb, :controller
+  alias Ecto.Changeset
+  alias MetaboardWeb.ErrorHelpers
 
   alias Plug.Conn
 
@@ -16,8 +18,9 @@ defmodule MetaboardWeb.RegistrationController do
         {:ok, _user, conn} ->
           conn |> send_api_token()
 
-        {:error, reason, _conn} -> {:error, reason}
-          conn |> send_user_create_errors(reason)
+        {:error, changeset, conn} ->
+          errors = Changeset.traverse_errors(changeset, &ErrorHelpers.translate_error/1)
+          send_user_create_errors(conn, errors)
       end
     end
   end
