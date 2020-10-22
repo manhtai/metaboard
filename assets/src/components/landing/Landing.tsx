@@ -103,7 +103,7 @@ export default function Landing() {
                 </div>
               </div>
 
-              <div className="w-full px-4 pt-6 text-center md:w-4/12">
+              <div className="w-full px-4 text-center lg:pt-6 md:w-4/12">
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
                     <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-green-400 rounded-full shadow-lg">
@@ -121,7 +121,7 @@ export default function Landing() {
             </div>
 
 
-            <div className="flex flex-wrap items-center mt-32">
+            <div className="flex flex-wrap items-center lg:mt-32 sm:mt-20">
               <div className="w-full px-4 ml-auto mr-auto md:w-5/12">
                 <h3 className="mb-2 text-3xl font-semibold leading-normal">
                   Keep track of Group Leaderboards.
@@ -190,7 +190,7 @@ export default function Landing() {
             </svg>
           </div>
 
-          <div className="container px-4 pt-4 pb-16 mx-auto">
+          <div className="container px-4 pt-4 mx-auto lg:pb-16">
             <div className="flex flex-wrap items-center">
               <div className="w-full px-4 ml-auto mr-auto md:w-4/12">
                 <img
@@ -330,7 +330,7 @@ export default function Landing() {
               <Link to="/signup">
                 <button
                   className={
-                    "bg-blue-600 text-white text-xl font-bold uppercase px-8 py-4 rounded-full shadow hover:bg-blue-700 active:bg-blue-500 outline-none focus:outline-none"
+                    "bg-blue-600 text-white md:text-xl font-bold uppercase px-8 py-4 rounded-full shadow hover:bg-blue-700 active:bg-blue-500 outline-none focus:outline-none"
                   }
                   type="button"
                   style={{ transition: "all .15s ease" }}
