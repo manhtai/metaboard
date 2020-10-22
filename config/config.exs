@@ -18,6 +18,10 @@ config :metaboard, MetaboardWeb.Endpoint,
   pubsub_server: Metaboard.PubSub,
   live_view: [signing_salt: "jIFZLBRB"]
 
+config :metaboard, :pow,
+  user: Metaboard.Users.User,
+  repo: Metaboard.Repo
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

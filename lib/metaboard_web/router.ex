@@ -11,18 +11,26 @@ defmodule MetaboardWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug(MetaboardWeb.APIAuthPlug, otp_app: :metaboard)
   end
 
-  scope "/", MetaboardWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
+  pipeline :api_protected do
+    plug(Pow.Plug.RequireAuthenticated, error_handler: ChatApiWeb.APIAuthErrorHandler)
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MetaboardWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MetaboardWeb do
+    pipe_through :api
+
+    resources("/registration", RegistrationController, singleton: true, only: [:create])
+    resources("/session", SessionController, singleton: true, only: [:create, :delete])
+    post("/session/renew", SessionController, :renew)
+  end
+
+  scope "/api", MetaboardWeb do
+    pipe_through([:api, :api_protected])
+
+    get("/me", SessionController, :me)
+  end
 
   # Enables LiveDashboard only for development
   #
@@ -38,5 +46,12 @@ defmodule MetaboardWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: MetaboardWeb.Telemetry
     end
+  end
+
+  scope "/", MetaboardWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
 end
