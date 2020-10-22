@@ -21,6 +21,12 @@ export const getAccessToken = (): string | null => {
   return (tokens && tokens.token) || null;
 };
 
+export const getRefreshToken = (): string | null => {
+  const tokens = getAuthTokens();
+
+  return (tokens && tokens.renew_token) || null;
+};
+
 export const register = async ({
   email,
   password,
@@ -55,4 +61,21 @@ export const me = async (token = getAccessToken()): Promise<User> => {
     .get(`/api/me`)
     .set('Authorization', token)
     .then((res) => res.body.data);
+};
+
+
+export const renew = async (token = getRefreshToken()) => {
+  if (!token) {
+    throw new Error('Invalid token!');
+  }
+
+  return request
+    .post(`/api/session/renew`)
+    .set('Authorization', token)
+    .then((res) => res.body.data);
+};
+
+
+export const logout = async () => {
+  return request.delete(`/api/session`).then((res) => res.body);
 };

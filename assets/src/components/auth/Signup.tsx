@@ -2,7 +2,8 @@ import React from 'react'
 
 import {
   faLock,
-  faEnvelope
+  faEnvelope,
+  faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom"
 
@@ -26,7 +27,7 @@ export default function Login() {
                   </p>
                   <div className="flex-auto px-4 py-10 lg:px-10">
                     <form>
-                      <div className="relative flex flex-row items-center content-center justify-center w-full mb-5">
+                      <div className="relative flex flex-row items-center content-center justify-center w-full mb-4">
                         <div className="flex-none px-4 py-3 text-gray-700 bg-gray-100 border-t border-b border-l border-gray-400 rounded-l-sm">
                           <FontAwesomeIcon icon={faEnvelope} />
                         </div>
@@ -37,7 +38,7 @@ export default function Login() {
                         />
                       </div>
 
-                      <div className="relative flex flex-row items-center content-center justify-center w-full mb-5">
+                      <div className="relative flex flex-row items-center content-center justify-center w-full mb-4">
                         <div className="flex-none px-4 py-3 text-gray-700 bg-gray-100 border-t border-b border-l border-gray-400 rounded-l-sm">
                           <FontAwesomeIcon icon={faLock} />
                         </div>
@@ -47,6 +48,13 @@ export default function Login() {
                           placeholder="Password"
                         />
                       </div>
+
+                      { true && (
+                        <div className="mb-4 text-sm text-red-500">
+                          <FontAwesomeIcon icon={faExclamationTriangle} />
+                              <span className="ml-1">Invalid</span>
+                          </div>
+                      )}
 
                       <div className="text-center">
                         <button

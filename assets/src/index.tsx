@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import './css/main.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {AuthProvider} from './components/auth/AuthProvider';
 import 'fontsource-nunito';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

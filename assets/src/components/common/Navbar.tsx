@@ -3,13 +3,16 @@ import React from "react";
 import {
   faBars,
   faSignInAlt,
+  faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom"
+import {useAuth} from '../auth/AuthProvider';
 
 
 export default function Navbar() {
+  const auth = useAuth();
   const [navbarOpen, setNavbarOpen] = React.useState(false);
 
   return (
@@ -67,11 +70,11 @@ export default function Navbar() {
                     }
                     type="button"
                   >
-                    <FontAwesomeIcon
-                      icon={faSignInAlt}
-                      className="mr-1"
-                    /> Log In
-                  </button>
+                      <FontAwesomeIcon
+                        icon={!auth.isAuthenticated ? faSignInAlt : faRocket}
+                        className="mr-1"
+                      /> {!auth.isAuthenticated ? "Log In" : "Your Boards"}
+                    </button>
                 </Link>
               </li>
             </ul>
