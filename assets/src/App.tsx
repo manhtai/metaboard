@@ -1,9 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Landing from './components/landing/Landing';
+
+import LandingPage from './components/landing/Landing';
 import LoginPage from './components/auth/Login';
-import Signup from './components/auth/Signup';
+import SignupPage from './components/auth/Signup';
+import FaqPage from './components/page/Faq';
+
 import AllBoards from './components/board/AllBoards';
+
 import {useAuth} from './components/auth/AuthProvider';
 
 function App() {
@@ -17,10 +21,12 @@ function App() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/home" component={Landing} />
+          <Route path="/faq" component={FaqPage} />
+
           <Route path="/login" component={LoginPage} />
-          <Route path="/signup" component={Signup} />
-          <Redirect from="/*" to="/home" />
+          <Route path="/signup" component={SignupPage} />
+
+          <Route path="/" component={LandingPage} />
         </Switch>
       </BrowserRouter>
     );
@@ -29,7 +35,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/home" component={Landing} />
+        <Route path="/faq" component={FaqPage} />
+
         <Route path="/boards" component={AllBoards} />
         <Redirect from="/*" to="/boards" />
       </Switch>
