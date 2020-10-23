@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type Board = {
   id: string;
   name: string;
+  code: string;
   type: string;
   updated_at: number;
   created_at: number;
@@ -27,15 +28,19 @@ function BoardItem(props: Board) {
       <div className="px-6 py-3 mx-3 my-4 bg-blue-100 rounded-lg cursor-pointer hover:bg-blue-200">
         <div className="flex flex-row justify-between">
           <div className="w-7/12 md:w-10/12 lg:w-10/12">
-            <h2 className="overflow-hidden font-semibold text-blue-900 truncate lg:text-xl">{props.name}</h2>
+            <h2 className="overflow-hidden text-xl font-semibold text-blue-900 truncate">{props.name}</h2>
           </div>
           <div className="self-center px-2 font-semibold text-white capitalize bg-green-600 rounded-2xl">
             {props.type}
           </div>
         </div>
 
-        <div className="flex flex-row my-1">
-          <div className="text-sm text-gray-700">
+        <div className="w-full mb-2 text-xs text-gray-700 uppercase truncate">
+          {props.code}
+        </div>
+
+        <div className="flex flex-row flex-wrap justify-between my-1">
+          <div className="text-sm italic text-gray-700">
             Updated <span>{formatDateAgo(props.updated_at)}</span>
           </div>
         </div>
@@ -49,6 +54,7 @@ export default function AllBoards() {
     {
       id: "abcd",
       name: "Class of 2020 leaderboard very long name without and end, now what",
+      code: "2020class",
       type: "leaderboard",
       updated_at: 1603460198000,
       created_at: 1603460198,
@@ -56,6 +62,7 @@ export default function AllBoards() {
     {
       id: "abce",
       name: "Soccer scoreboard",
+      code: "2020classsockerboardgame",
       type: "scoreboard",
       updated_at: 1603460198,
       created_at: 1603460198,
@@ -63,6 +70,7 @@ export default function AllBoards() {
     {
       id: "abcf",
       name: "Score counter",
+      code: "counter2020classsockerboardgame",
       type: "counter",
       updated_at: 1603460198,
       created_at: 1603460198,
