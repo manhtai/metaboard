@@ -66,9 +66,9 @@ class Login extends React.Component<Props, State> {
           <section className="absolute w-full h-full">
             <div className="container h-full px-4 mx-auto">
               <div className="flex items-center content-center justify-center h-full">
-                <div className="w-full max-w-md">
+                <div className="w-full max-w-md -mt-20">
                   <div className="relative flex flex-col w-full min-w-0 mb-6 break-words">
-                    <h1 className="flex-auto p-2 text-2xl text-center">
+                    <h1 className="flex-auto p-2 text-2xl font-bold text-center">
                       Welcome back!
                     </h1>
                     <p className="text-center">
@@ -114,7 +114,7 @@ class Login extends React.Component<Props, State> {
                         <div className="text-center">
                           <button
                             className={
-                              "w-full px-6 py-3 mb-1 mr-1 font-bold text-white bg-blue-600 rounded-full outline-none active:bg-blue-500 hover:bg-blue-700 focus:outline-none" +
+                              "w-full px-6 py-3 mb-1 mr-1 font-bold text-white bg-blue-500 rounded-full outline-none active:bg-blue-400 hover:bg-blue-600 focus:outline-none" +
                             (loading ? " opacity-50 cursor-not-allowed" : "")}
                             type="submit"
                           >
@@ -127,7 +127,7 @@ class Login extends React.Component<Props, State> {
                       {"No account?"}
                       <Link
                         to="/signup"
-                        className="ml-1 font-bold text-blue-600 hover:text-blue-700"
+                        className="ml-1 font-bold text-blue-500 hover:text-blue-600"
                       >
                         Sign Up!
                       </Link>

@@ -21,12 +21,14 @@ function App() {
     return (
       <BrowserRouter>
         <Switch>
+          <Route path="/landing" component={LandingPage} />
           <Route path="/faq" component={FaqPage} />
 
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
 
-          <Route path="/" component={LandingPage} />
+
+          <Redirect from="/" to="/landing" />
         </Switch>
       </BrowserRouter>
     );
@@ -35,6 +37,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/landing" component={LandingPage} />
         <Route path="/faq" component={FaqPage} />
 
         <Route path="/boards" component={AllBoards} />
