@@ -45,7 +45,7 @@ export default function AllBoards() {
   return (
     <>
       <Navbar type={"list"} />
-      <section className="relative flex items-center content-center justify-center pt-8 pb-16">
+      <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
           <div className="flex flex-row flex-wrap justify-between mx-3 mb-10">
             <div className="flex flex-row mt-3">

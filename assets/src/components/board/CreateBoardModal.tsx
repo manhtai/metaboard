@@ -52,7 +52,7 @@ export default function CreateBoardModal(props: Props) {
 
                   <div className="mb-4">
                     <label className="inline-block mb-2 font-bold leading-relaxed">
-                      Board code (Optional)
+                      Short link (Optional)
                     </label>
                     <div
                       className="block w-full px-3 py-3 leading-tight border border-gray-400 rounded-sm appearance-none hover:border-blue-500"

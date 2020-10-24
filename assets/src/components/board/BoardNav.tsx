@@ -21,7 +21,7 @@ export default function Navbar({ type }: { type?: string }) {
     <>
       <nav
         className={
-            "top-0 bg-white border-b border-gray-300 shadow-sm absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
+            "top-0 bg-white border-b border-gray-300 shadow-sm absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3"
         }
       >
         <div className="container flex flex-wrap items-center justify-between px-4 mx-auto">
@@ -52,7 +52,7 @@ export default function Navbar({ type }: { type?: string }) {
             <ul className="flex flex-col list-none lg:flex-row lg:ml-auto">
             {
               type === "list" ? (
-              <li className="flex items-center mr-8 cursor-pointer">
+              <li className="flex items-center cursor-pointer">
                 <Link to={"/me"}>
                     <span className="mr-2 font-semibold">{auth.tokens && auth.tokens.email}</span>
                     <span className="inline-block px-2 py-1 text-xs font-semibold text-white uppercase bg-blue-500 rounded shadow-xs last:mr-0">
@@ -85,14 +85,14 @@ export default function Navbar({ type }: { type?: string }) {
                   />
                   Data
               </li>
-              <li className="flex items-center mr-8 text-green-600 last:mr-0">
+              <li className="flex items-center mr-8 text-green-600">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"
                   />
                   Saved
               </li>
-              <li className="flex items-center mr-8 text-red-600 last:mr-0">
+              <li className="flex items-center text-red-600">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"
