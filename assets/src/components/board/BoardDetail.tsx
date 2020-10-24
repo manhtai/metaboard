@@ -15,12 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function PlayerEdit(props: Player) {
   return (
     <div className="flex flex-row py-3 justify-items-stretch">
-      <div className="flex-none w-16 mr-2 text-left">
-        <input
-          className="w-full p-1 border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"
-          value={props.id}
-        />
-      </div>
       <div className="flex-grow mr-2">
         <input
           className="w-full p-1 border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"

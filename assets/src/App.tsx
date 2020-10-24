@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import LandingPage from './components/landing/Landing';
 import LoginPage from './components/auth/Login';
 import SignupPage from './components/auth/Signup';
+import MePage from './components/auth/Me';
 import FaqPage from './components/page/Faq';
 
 import BoardList from './components/board/BoardList';
@@ -44,6 +45,8 @@ function App() {
         <Route path="/faq" component={FaqPage} />
 
         <Route path="/s/:code" component={BoardSharing} />
+
+        <Route path="/me" component={MePage} />
 
         <Route path="/boards/:id" component={BoardDetail} />
         <Route path="/boards" component={BoardList} />
