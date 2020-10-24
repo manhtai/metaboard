@@ -19,7 +19,7 @@ export default function Navbar() {
     <>
       <nav
         className={
-            "top-0 bg-blue-500 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
+            "top-0 bg-blue-500 shadow-sm bg-opacity-75 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
         }
       >
         <div className="container flex flex-wrap items-center justify-between px-4 mx-auto">

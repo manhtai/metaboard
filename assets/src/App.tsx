@@ -7,6 +7,8 @@ import SignupPage from './components/auth/Signup';
 import FaqPage from './components/page/Faq';
 
 import AllBoards from './components/board/AllBoards';
+import BoardDetail from './components/board/BoardDetail';
+import BoardSharing from './components/board/BoardSharing';
 
 import {useAuth} from './components/auth/AuthProvider';
 
@@ -27,6 +29,7 @@ function App() {
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={SignupPage} />
 
+          <Route path="/s/:code" component={BoardSharing} />
 
           <Redirect from="/" to="/landing" />
         </Switch>
@@ -40,6 +43,9 @@ function App() {
         <Route path="/landing" component={LandingPage} />
         <Route path="/faq" component={FaqPage} />
 
+        <Route path="/s/:code" component={BoardSharing} />
+
+        <Route path="/boards/:id" component={BoardDetail} />
         <Route path="/boards" component={AllBoards} />
         <Redirect from="/*" to="/boards" />
       </Switch>

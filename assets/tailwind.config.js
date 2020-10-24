@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   future: {
@@ -14,5 +15,11 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [
+    plugin(function({ addBase, config }) {
+      addBase({
+        'body': { color: config('theme.colors.blue.900') },
+      })
+    })
+  ],
 }

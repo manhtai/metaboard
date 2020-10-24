@@ -36,12 +36,12 @@ export default function Landing() {
           </div>
           <div className="container relative mx-auto">
               <div className="flex flex-wrap items-center">
-                <div className="w-full px-4 ml-auto mr-auto text-center lg:w-6/12">
+                <div className="w-full px-4 ml-auto mr-auto text-center text-white lg:w-6/12">
                   <div className="pr-12">
-                    <h1 className="text-5xl font-semibold text-white">
+                    <h1 className="text-5xl font-semibold">
                       Welcome to Metaboard!
                     </h1>
-                    <p className="mt-4 text-lg text-gray-300">
+                    <p className="mt-4 text-2xl text-white">
                       Create dead simple real-time boards for FREE!
                     </p>
                   </div>
