@@ -1,29 +1,40 @@
 import React from 'react';
 
 import Navbar from "./BoardNav";
-import {formatDateAgo} from "../../util";
+import {formatDateAgo, getColorByOrder} from "../../util";
 
 
 type Player = {
-  order: number,
+  index: number,
   id: string,
   name: string,
   score: number,
+  percentage: string,
 }
 
 
 function Player(props: Player) {
+
+  const color = "bg-" + getColorByOrder(props.index) + "-500"
 
   return (
     <>
       <div className="flex flex-row content-center justify-center w-full py-3 justify-items-stretch">
         <div className="self-center flex-none w-24 pr-4 text-right">
           <div className="right-0 inline-block px-3 py-1 font-bold text-center text-gray-700 bg-gray-200 rounded-full">
-            {props.order}
+            {props.index + 1}
           </div>
         </div>
-        <div className="flex-1 w-64 px-3 py-3 bg-gray-100 rounded">
-          {props.name}
+        <div className="relative self-center flex-1 w-64">
+          <div
+            className={"absolute p-3 overflow-hidden text-white whitespace-no-wrap rounded " + color}
+            style={{ width: props.percentage }}
+          >
+            {props.name}
+          </div>
+          <div className="w-full p-3 truncate bg-gray-200 rounded">
+            {props.name}
+          </div>
         </div>
         <div className="self-center flex-none w-24 pl-4 font-semibold">
           {props.score}p
@@ -45,24 +56,79 @@ export default function BoardDetail() {
     created_at: 1603460198000,
     items: [
       {
-        id: "3",
-        order: 1,
-        name: "Noal",
+        id: "0",
+        index: 0,
+        name: "Noal Lauren",
         score: 150,
       },
       {
         id: "1",
-        order: 2,
-        name: "David",
+        index: 1,
+        name: "David Ronaldo",
         score: 100,
       },
       {
         id: "2",
-        order: 323,
-        name: "Golia",
+        index: 2,
+        name: "David Ronaldo",
+        score: 99,
+      },
+      {
+        id: "3",
+        index: 3,
+        name: "David Ronaldo",
+        score: 98,
+      },
+      {
+        id: "4",
+        index: 4,
+        name: "David Ronaldo",
+        score: 97,
+      },
+      {
+        id: "5",
+        index: 5,
+        name: "David Ronaldo",
+        score: 96,
+      },
+      {
+        id: "6",
+        index: 6,
+        name: "David Ronaldo",
+        score: 95,
+      },
+      {
+        id: "7",
+        index: 7,
+        name: "David Ronaldo",
+        score: 94,
+      },
+      {
+        id: "8",
+        index: 8,
+        name: "David Ronaldo",
+        score: 93,
+      },
+      {
+        id: "9",
+        index: 9,
+        name: "David Ronaldo",
+        score: 92,
+      },
+      {
+        id: "10",
+        index: 10,
+        name: "David Ronaldo",
+        score: 91,
+      },
+      {
+        id: "323",
+        index: 323,
+        name: "Golia Beckham",
         score: 50,
       },
     ],
+    max_score: 150,
   };
 
   return (
@@ -76,7 +142,10 @@ export default function BoardDetail() {
             </h1>
           </div>
           <div className="mb-10">
-            { data.items.map(d => <Player {...d} />) }
+            { data.items
+                .map(d => ({...d, percentage: d.score/data.max_score*100 + "%"}))
+                .map(d => <Player {...d} />)
+              }
           </div>
 
           <div className="mx-auto mt-10 text-xs text-center text-gray-500">
