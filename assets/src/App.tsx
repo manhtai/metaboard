@@ -6,7 +6,7 @@ import LoginPage from './components/auth/Login';
 import SignupPage from './components/auth/Signup';
 import FaqPage from './components/page/Faq';
 
-import AllBoards from './components/board/AllBoards';
+import BoardList from './components/board/BoardList';
 import BoardDetail from './components/board/BoardDetail';
 import BoardSharing from './components/board/BoardSharing';
 
@@ -46,7 +46,7 @@ function App() {
         <Route path="/s/:code" component={BoardSharing} />
 
         <Route path="/boards/:id" component={BoardDetail} />
-        <Route path="/boards" component={AllBoards} />
+        <Route path="/boards" component={BoardList} />
         <Redirect from="/*" to="/boards" />
       </Switch>
     </BrowserRouter>

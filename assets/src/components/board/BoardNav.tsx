@@ -55,7 +55,7 @@ export default function Navbar({ type }: { type?: string }) {
               <li className="flex items-center mr-8 cursor-pointer">
                 <Link to={"/me"}>
                     <span className="mr-2 font-semibold">{auth.tokens && auth.tokens.email}</span>
-                    <span className="inline-block px-2 py-1 text-xs font-semibold text-white uppercase bg-blue-500 rounded last:mr-0">
+                    <span className="inline-block px-2 py-1 text-xs font-semibold text-white uppercase bg-blue-500 rounded shadow-xs last:mr-0">
                       free
                     </span>
                 </Link>
