@@ -71,7 +71,8 @@ export default function CreateBoardModal(props: Props) {
                       Board type
                     </label>
                     <div className="relative">
-                      <select className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500">
+                      <select className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
+                      disabled>
                         <option value="leaderboard">Leaderboard</option>
                         <option value="scoreboard">Scoreboard</option>
                         <option value="counter">Counter</option>

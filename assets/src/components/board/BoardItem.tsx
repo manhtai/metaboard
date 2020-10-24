@@ -1,15 +1,8 @@
 import React from 'react'
 import {formatDateAgo} from "../../util";
 import {Link} from 'react-router-dom';
+import {Board} from "../../types"
 
-type Board = {
-  id: string;
-  name: string;
-  code: string;
-  type: string;
-  updated_at: number;
-  created_at: number;
-};
 
 export default function BoardItem(props: Board) {
 

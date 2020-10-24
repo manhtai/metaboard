@@ -1,5 +1,11 @@
 import React from 'react';
 
+import {
+  faTrophy,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {formatDateAgo, getColorByOrder} from "../../util";
 import {Board, Player} from "../../types"
 
@@ -16,15 +22,15 @@ function PlayerBar(props: Player) {
             {props.index + 1}
           </div>
         </div>
-        <div className="relative self-center flex-1 w-64">
+        <div className="relative self-center flex-1 w-64 font-semibold">
           <div
             className={"absolute p-3 overflow-hidden text-white whitespace-no-wrap rounded " + color}
             style={{ width: props.percentage }}
           >
-            {props.name}
+            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon icon={faTrophy} /> : null}
           </div>
           <div className="w-full p-3 truncate bg-gray-200 rounded">
-            {props.name}
+            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon icon={faTrophy} /> : null}
           </div>
         </div>
         <div className="self-center flex-none w-24 pl-4 font-semibold">
@@ -54,7 +60,7 @@ export default function LeaderBoard(props: Board) {
                   ...d,
                   percentage: (props.max_score ? d.score/props.max_score*100 : 0) + "%"
                 })
-              ).map(d => <PlayerBar {...d} />)
+              ).map(d => <PlayerBar {...d} key={d.id} />)
               }
           </div>
 
