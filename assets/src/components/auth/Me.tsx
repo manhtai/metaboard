@@ -15,7 +15,7 @@ export default function Me() {
 
   return (
     <>
-      <Navbar type={"list"} />
+      <Navbar type={"me"} />
       <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
           <div className="block px-6 py-3 mx-3 my-4 bg-gray-100 rounded-lg shadow">

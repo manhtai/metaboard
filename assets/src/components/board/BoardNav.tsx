@@ -79,7 +79,17 @@ export default function Navbar({ type }: { type?: string }) {
                     </span>
                 </Link>
               </li>
-              ) : (
+            ) : type === "me" ? (
+              <li className="flex items-center cursor-pointer hover:text-blue-600">
+                <Link to={"/boards"}>
+                    <FontAwesomeIcon
+                      icon={faChevronLeft}
+                      className="mr-1"
+                    />
+                    Home
+                </Link>
+              </li>
+            ) : (
             <>
               <li className="flex items-center mr-8 cursor-pointer hover:text-blue-600">
                 <Link to={"/boards"}>
