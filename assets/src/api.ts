@@ -79,3 +79,63 @@ export const renew = async (token = getRefreshToken()) => {
 export const logout = async () => {
   return request.delete(`/api/session`).then((res) => res.body);
 };
+
+
+export const fetchAllBoards = async (
+  token = getAccessToken()
+) => {
+  if (!token) {
+    throw new Error('Invalid token!');
+  }
+
+  return request
+    .get(`/api/boards`)
+    .set('Authorization', token)
+    .then((res) => res.body.data);
+}
+
+
+export const fetchBoardById = async (
+  id: string,
+  token = getAccessToken()
+) => {
+  if (!token) {
+    throw new Error('Invalid token!');
+  }
+
+  return request
+    .get(`/api/boards/${id}`)
+    .set('Authorization', token)
+    .then((res) => res.body.data);
+}
+
+export const createBoard = async (
+  data: any,
+  token = getAccessToken()
+) => {
+  if (!token) {
+    throw new Error('Invalid token!');
+  }
+
+  return request
+    .post('/api/boards')
+    .set('Authorization', token)
+    .send(data)
+    .then((res) => res.body.data);
+}
+
+export const updateBoard = async (
+  id: string,
+  updates: any,
+  token = getAccessToken()
+) => {
+  if (!token) {
+    throw new Error('Invalid token!');
+  }
+
+  return request
+    .put(`/api/boards/${id}`)
+    .set('Authorization', token)
+    .send(updates)
+    .then((res) => res.body.data);
+}

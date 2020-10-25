@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Navbar from "./BoardNav";
 import BoardItem from "./BoardItem";
 import CreateBoardModal from "./CreateBoardModal";
+import {RouteComponentProps} from 'react-router-dom';
 
 import {
   faPlus,
@@ -11,36 +12,22 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import {useBoards} from './BoardProvider'
+import {Board} from '../../types'
 
-export default function AllBoards() {
-  const data = [
-    {
-      id: "abcd",
-      name: "Class of 2020 leaderboard very long name without and end, now what",
-      code: "2020class",
-      type: "leaderboard",
-      updated_at: 1603460198000,
-      created_at: 1603460198,
-    },
-    {
-      id: "abce",
-      name: "Soccer scoreboard",
-      code: "2020classsockerboardgame",
-      type: "scoreboard",
-      updated_at: 1603460198,
-      created_at: 1603460198,
-    },
-    {
-      id: "abcf",
-      name: "Score counter",
-      code: "counter2020classsockerboardgame",
-      type: "counter",
-      updated_at: 1603460198,
-      created_at: 1603460198,
-    },
-  ];
+
+export default function AllBoards(props: RouteComponentProps) {
+  const [boards, setBoards] = useState<Board[]>([])
 
   const [showCreateModal, setShowCreateModal] = React.useState(false)
+  const { fetchAllBoards, createBoard, loading } = useBoards()
+
+  useEffect(() => {
+    fetchAllBoards().then((boards) => {
+      setBoards(boards)
+    })
+  }, [fetchAllBoards])
+
 
   return (
     <>
@@ -67,11 +54,13 @@ export default function AllBoards() {
             </div>
           </div>
           <div>
-            { data.map(d => <BoardItem {...d} key={d.id} />) }
+            { loading ? "Loading..." : boards.map(d => <BoardItem {...d} key={d.id} />) }
           </div>
         </div>
       </section>
       <CreateBoardModal
+        {...props}
+        create={createBoard}
         visible={showCreateModal}
         onCancel={() => setShowCreateModal(false)}
         onOk={() => setShowCreateModal(false)}

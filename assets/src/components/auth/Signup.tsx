@@ -13,7 +13,7 @@ import {RouteComponentProps, Link} from 'react-router-dom';
 import {useAuth} from './AuthProvider';
 import logger from '../../logger';
 
-type Props = RouteComponentProps<{invite?: string}> & {
+type Props = RouteComponentProps & {
   onSubmit: (params: any) => Promise<void>;
 };
 type State = {

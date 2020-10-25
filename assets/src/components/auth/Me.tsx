@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {RouteComponentProps} from 'react-router-dom';
 import Navbar from "../board/BoardNav";
 import {useAuth} from "./AuthProvider"
 
@@ -10,8 +11,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export default function Me() {
+export default function Me(props: RouteComponentProps) {
   const auth = useAuth()
+
+  const logout = () => auth.logout().then(() => props.history.push('/login'));
 
   return (
     <>
@@ -42,7 +45,7 @@ export default function Me() {
               className="flex-none"
             >
               <span
-                onClick={auth.logout}
+                onClick={logout}
                 className="text-sm text-gray-600 cursor-pointer hover:text-blue-500"
               >
                 <FontAwesomeIcon

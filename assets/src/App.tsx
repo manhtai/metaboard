@@ -4,12 +4,10 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import LandingPage from './components/landing/Landing';
 import LoginPage from './components/auth/Login';
 import SignupPage from './components/auth/Signup';
-import MePage from './components/auth/Me';
 import FaqPage from './components/page/Faq';
 
-import BoardList from './components/board/BoardList';
-import BoardDetail from './components/board/BoardDetail';
 import BoardSharing from './components/board/BoardSharing';
+import BoardWrapper from './components/board/BoardWrapper';
 
 import {useAuth} from './components/auth/AuthProvider';
 
@@ -32,7 +30,7 @@ function App() {
 
           <Route path="/s/:code" component={BoardSharing} />
 
-          <Redirect from="/" to="/landing" />
+          <Redirect from="*" to="/landing" />
         </Switch>
       </BrowserRouter>
     );
@@ -46,11 +44,8 @@ function App() {
 
         <Route path="/s/:code" component={BoardSharing} />
 
-        <Route path="/me" component={MePage} />
-
-        <Route path="/boards/:id" component={BoardDetail} />
-        <Route path="/boards" component={BoardList} />
-        <Redirect from="/*" to="/boards" />
+        <Route path="/" component={BoardWrapper} />
+        <Redirect from="*" to="/boards" />
       </Switch>
     </BrowserRouter>
   );
