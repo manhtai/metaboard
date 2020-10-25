@@ -50,7 +50,7 @@ export default function AllBoards() {
           <div className="flex flex-row flex-wrap justify-between mx-3 mb-10">
             <div className="flex flex-row mt-3">
               <div
-                className="self-center px-4 py-2 text-white bg-blue-500 border rounded-full shadow cursor-pointer hover:bg-blue-600"
+                className="self-center px-4 py-2 text-white bg-blue-500 rounded-full shadow cursor-pointer hover:bg-blue-600"
                 onClick={() => setShowCreateModal(true)}
               >
                 New board <FontAwesomeIcon icon={faPlus} />

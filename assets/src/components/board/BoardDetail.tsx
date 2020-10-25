@@ -124,8 +124,8 @@ export default function BoardDetail() {
     <>
       <Navbar />
       <section className="container mx-auto mt-6">
-        <div className="flex flex-wrap bg-gray-100 shadow-inner">
-          <div className="flex-none w-full max-w-md px-6 py-16 text-sm bg-white shadow">
+        <div className="flex flex-wrap bg-gray-100 shadow">
+          <div className="flex-none w-full max-w-md px-6 py-16 text-sm bg-white shadow-inner">
             <div className="flex flex-col">
               <div className="mb-4">
                 <label className="inline-block mb-2 font-bold leading-relaxed">

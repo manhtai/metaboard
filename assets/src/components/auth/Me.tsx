@@ -18,7 +18,7 @@ export default function Me() {
       <Navbar type={"list"} />
       <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
-          <div className="block px-6 py-3 mx-3 my-4 bg-blue-100 rounded-lg shadow">
+          <div className="block px-6 py-3 mx-3 my-4 bg-gray-100 rounded-lg shadow">
             <div className="mb-2">
               <span className="inline-block w-16">
                 Email:
@@ -27,7 +27,7 @@ export default function Me() {
                 {auth.tokens && auth.tokens.email}
               </span>
             </div>
-            <div>
+            <div className="">
               <span className="inline-block w-16">
                 Plan:
               </span>
@@ -37,14 +37,21 @@ export default function Me() {
             </div>
           </div>
 
-          <span
-            className="inline-block px-6 mx-3 mt-16 cursor-pointer hover:opacity-75"
-            onClick={auth.logout}
-          >
-            <FontAwesomeIcon
-              icon={faSignOutAlt}
-            /> Log Out
-          </span>
+          <div className="flex flex-row px-6 mx-3 mt-16 justify-items-stretch">
+            <div
+              className="flex-none"
+            >
+              <span
+                onClick={auth.logout}
+                className="text-sm text-gray-600 cursor-pointer hover:text-blue-500"
+              >
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                />{" "}
+                <span>Log Out</span>
+              </span>
+            </div>
+          </div>
         </div>
       </section>
     </>

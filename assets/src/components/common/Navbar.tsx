@@ -4,6 +4,7 @@ import {
   faBars,
   faSignInAlt,
   faRocket,
+  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +20,7 @@ export default function Navbar() {
     <>
       <nav
         className={
-            "top-0 bg-blue-500 shadow-sm bg-opacity-75 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
+            "top-0 bg-blue-500 shadow-sm absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg"
         }
       >
         <div className="container flex flex-wrap items-center justify-between px-4 mx-auto">
@@ -46,18 +47,18 @@ export default function Navbar() {
               "lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none" +
               (navbarOpen ? " block rounded shadow-lg" : " hidden")
             }
-            id="example-navbar-warning"
           >
             <ul className="flex flex-col mr-auto list-none lg:flex-row">
               <li className="flex items-center">
                 <Link
-                  className="flex items-center px-3 py-4 text-xs font-bold text-gray-800 uppercase lg:text-white lg:hover:text-gray-300 lg:py-2"
+                  className="flex items-center px-3 py-4 text-sm font-bold text-gray-800 uppercase lg:text-white lg:hover:text-gray-300 lg:py-2"
                   to={"/faq"}
                 >
-                  <i
-                    className="mr-2 text-lg text-gray-500 lg:text-gray-300 far fa-file-alt leading-lg"
-                  />{" "}
-                  FAQ
+                  <FontAwesomeIcon
+                    icon={faQuestionCircle}
+                    className="mr-1"
+                  />
+                  Faq
                 </Link>
               </li>
             </ul>

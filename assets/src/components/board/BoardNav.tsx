@@ -6,6 +6,8 @@ import {
   faShareSquare,
   faCloudDownloadAlt,
   faCheckCircle,
+  faRocket,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,17 +46,34 @@ export default function Navbar({ type }: { type?: string }) {
           </div>
           <div
             className={
-              "lg:flex flex-grow items-center lg:bg-transparent" +
+              "lg:flex flex-grow items-center lg:bg-transparent text-sm" +
               (navbarOpen ? " block rounded" : " hidden")
             }
-            id="example-navbar-warning"
           >
+            <ul className="flex flex-col mr-auto list-none lg:flex-row hover:text-blue-600">
+              <li className="flex items-center">
+                <Link
+                  className="flex items-center py-4 lg:py-2"
+                  to={"/boards"}
+                >
+                  <FontAwesomeIcon
+                    icon={faRocket}
+                    className="mr-1"
+                  />
+                  Boards
+                </Link>
+              </li>
+            </ul>
             <ul className="flex flex-col list-none lg:flex-row lg:ml-auto">
             {
               type === "list" ? (
-              <li className="flex items-center cursor-pointer">
+              <li className="flex items-center cursor-pointer hover:text-blue-600">
                 <Link to={"/me"}>
-                    <span className="mr-2 font-semibold">{auth.tokens && auth.tokens.email}</span>
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      className="mr-1"
+                    />
+                    <span className="mr-2">{auth.tokens && auth.tokens.email}</span>
                     <span className="inline-block px-2 py-1 text-xs font-semibold text-white uppercase bg-blue-500 rounded shadow-xs last:mr-0">
                       free
                     </span>
