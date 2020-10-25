@@ -1,10 +1,15 @@
 defmodule Metaboard.Boards.Board do
   use Ecto.Schema
   import Ecto.Changeset
-
   alias Metaboard.Users.User
-  alias Metaboard.Board.BoardTypes
+  alias Metaboard.Boards.BoardTypes
+  alias Metaboard.Boards.Item
+  alias Metaboard.Util
 
+  @code_length 10
+
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   schema "boards" do
     field(:name, :string)
     field(:code, :string)
@@ -20,8 +25,9 @@ defmodule Metaboard.Boards.Board do
 
   def changeset(board, attrs) do
     board
-    |> cast(attrs, [:name, :code, :type, :items, :user_id])
-    |> validate_required([:name, :code, :type, :user_id])
+    |> cast(attrs, [:name, :code, :type, :user_id])
+    |> cast_embed(:items)
+    |> validate_required([:name, :type, :user_id])
     |> unique_constraint(:code)
   end
 
@@ -31,4 +37,28 @@ defmodule Metaboard.Boards.Board do
     |> cast(attrs, [:disabled_at])
     |> validate_required([])
   end
+
+  def set_random_code_if_blank(changeset) do
+    code = get_field(changeset, :code)
+    if Util.blank?(code) do
+      put_change(changeset, :code, get_unique_code())
+    else
+      changeset
+    end
+  end
+
+  defp get_unique_code do
+    code = Util.random_string(@code_length)
+    changeset = change(%__MODULE__{}, code: code)
+    changeset = unsafe_validate_unique(changeset, [:code], Metaboard.Repo)
+
+    if is_code_unique(changeset) do
+      code
+    else
+      get_unique_code()
+    end
+  end
+
+  defp is_code_unique(%Ecto.Changeset{valid?: true}), do: true
+  defp is_code_unique(_), do: false
 end

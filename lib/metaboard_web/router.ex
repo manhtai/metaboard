@@ -15,7 +15,7 @@ defmodule MetaboardWeb.Router do
   end
 
   pipeline :api_protected do
-    plug(Pow.Plug.RequireAuthenticated, error_handler: ChatApiWeb.APIAuthErrorHandler)
+    plug(Pow.Plug.RequireAuthenticated, error_handler: MetaboardWeb.APIAuthErrorHandler)
   end
 
   scope "/api", MetaboardWeb do
@@ -30,6 +30,8 @@ defmodule MetaboardWeb.Router do
     pipe_through([:api, :api_protected])
 
     get("/me", SessionController, :me)
+
+    resources("/boards", BoardController)
   end
 
   # Enables LiveDashboard only for development

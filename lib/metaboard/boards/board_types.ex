@@ -1,4 +1,4 @@
-defmodule Metaboard.Board.BoardTypes do
+defmodule Metaboard.Boards.BoardTypes do
   @leaderboard "leaderboard"
   @scoreboard "scoreboard"
   @counter "counter"

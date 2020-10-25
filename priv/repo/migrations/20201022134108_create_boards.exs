@@ -1,6 +1,6 @@
 defmodule Metaboard.Repo.Migrations.CreateBoards do
   use Ecto.Migration
-  alias Metaboard.Board.BoardTypes
+  alias Metaboard.Boards.BoardTypes
 
   def change do
     create table(:boards, primary_key: false) do
