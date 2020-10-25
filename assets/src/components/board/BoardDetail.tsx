@@ -114,7 +114,7 @@ export default function BoardDetail() {
         id: "323",
         index: 323,
         name: "Golia Beckham",
-        score: 50,
+        score: 5,
       },
     ],
     max_score: 150,
@@ -123,7 +123,7 @@ export default function BoardDetail() {
   return (
     <>
       <Navbar />
-      <section className="container mx-auto mt-6">
+      <section className="container px-4 mx-auto mt-6">
         <div className="flex flex-wrap bg-gray-100 shadow">
           <div className="flex-none w-full max-w-md px-6 py-16 text-sm bg-white shadow-inner">
             <div className="flex flex-col">

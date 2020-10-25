@@ -12,7 +12,7 @@ import {Board, Player} from "../../types"
 
 function PlayerBar(props: Player) {
 
-  const color = "bg-" + getColorByOrder(props.index) + "-500"
+  const color = " bg-" + getColorByOrder(props.index) + "-500 "
 
   return (
     <>
@@ -24,13 +24,13 @@ function PlayerBar(props: Player) {
         </div>
         <div className="relative self-center flex-1 w-64 font-semibold">
           <div
-            className={"absolute p-3 overflow-hidden text-white whitespace-no-wrap rounded " + color}
+            className={"absolute p-3 overflow-hidden text-white whitespace-no-wrap rounded transition-all ease-out duration-1000 " + color}
             style={{ width: props.percentage }}
           >
-            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon icon={faTrophy} /> : null}
+            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon className="ml-1" icon={faTrophy} /> : null}
           </div>
           <div className="w-full p-3 truncate bg-gray-200 rounded">
-            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon icon={faTrophy} /> : null}
+            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon className="ml-1" icon={faTrophy} /> : null}
           </div>
         </div>
         <div className="self-center flex-none w-24 pl-4 font-semibold">
@@ -42,31 +42,39 @@ function PlayerBar(props: Player) {
 
 }
 
+type State = {
+  loaded: boolean
+}
 
-export default function LeaderBoard(props: Board) {
-  return (
+export default class LeaderBoard extends React.Component<Board, State> {
+  componentDidMount() {
+    setTimeout(() => this.setState({ loaded: true }), 200)
+  }
+
+  render() {
+   return (
     <>
       <div className="w-full pt-8 pb-16 mx-auto mt-6 max-w-screen-md">
         <div className="max-w-xl px-2 mx-auto mt-6 mb-10 ">
           <h1 className="text-2xl font-semibold text-center">
-          { props.name }
+          { this.props.name }
           </h1>
         </div>
         <div className="mb-10">
-          { props.items && props.items
+          { this.props.items && this.props.items
             .map(d =>
               ({
                 ...d,
-                percentage: (props.max_score ? d.score/props.max_score*100 : 0) + "%"
+                percentage: (this.props.max_score && this.state && this.state.loaded ? d.score/this.props.max_score*100 : 0) + "%"
               })
             ).map(d => <PlayerBar {...d} key={d.id} />)
             }
         </div>
 
         <div className="mx-auto mt-10 text-xs text-center text-gray-500">
-          Created {formatDateAgo(props.created_at)}. Updated {formatDateAgo(props.updated_at)}.
+          Created {formatDateAgo(this.props.created_at)}. Updated {formatDateAgo(this.props.updated_at)}.
         </div>
       </div>
     </>
-  )
+  )} 
 }
