@@ -27,7 +27,7 @@ defmodule Metaboard.Boards.Board do
     board
     |> cast(attrs, [:name, :code, :type, :user_id])
     |> cast_embed(:items)
-    |> validate_required([:name, :type, :user_id])
+    |> validate_required([:type, :user_id])
     |> validate_inclusion(:type, [
       BoardTypes.leaderboard,
       BoardTypes.scoreboard,
@@ -41,6 +41,16 @@ defmodule Metaboard.Boards.Board do
     board
     |> cast(attrs, [:disabled_at])
     |> validate_required([])
+  end
+
+  def set_fixed_name_if_blank(changeset) do
+    name = get_field(changeset, :name)
+    type = get_field(changeset, :type)
+    if Util.blank?(name) do
+      put_change(changeset, :name, "My new " <> type)
+    else
+      changeset
+    end
   end
 
   def set_random_code_if_blank(changeset) do

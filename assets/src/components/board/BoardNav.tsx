@@ -4,7 +4,6 @@ import {
   faBars,
   faChevronLeft,
   faShareSquare,
-  faCloudDownloadAlt,
   faCheckCircle,
   faRocket,
   faUser,
@@ -13,11 +12,19 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom"
 import {useAuth} from '../auth/AuthProvider';
+import {useBoards} from './BoardProvider';
 
 
-export default function Navbar({ type }: { type?: string }) {
+type Props = {
+  type?: string;
+}
+
+
+export default function Navbar(props: Props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const auth = useAuth()
+  const { type } = props
+  const { saving, error } = useBoards()
 
   return (
     <>
@@ -107,27 +114,22 @@ export default function Navbar({ type }: { type?: string }) {
                   />
                   Share
               </li>
-              <li className="flex items-center mr-8 cursor-pointer hover:text-blue-600">
-                  <FontAwesomeIcon
-                    icon={faCloudDownloadAlt}
-                    className="mr-1"
-                  />
-                  Data
-              </li>
-              <li className="flex items-center mr-8 text-green-600">
+
+              { !saving && !error ? <li className="flex items-center text-green-600">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"
                   />
                   Saved
-              </li>
-              <li className="flex items-center text-red-600">
+              </li> : null}
+
+              { !saving && error ? <li className="flex items-center text-red-600">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"
                   />
                   Error
-              </li>
+              </li>: null}
             </>)
             }
             </ul>

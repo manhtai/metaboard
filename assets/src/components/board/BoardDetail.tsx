@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import Navbar from "./BoardNav";
 import LeaderBoard from "./LeaderBoard";
-import {Player} from "../../types"
+import {Player, Board} from "../../types"
+import {RouteComponentProps} from 'react-router-dom';
+import Loading from "../common/Loading";
+
 import {
   faPlus,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import {useBoards} from './BoardProvider'
 
 
 function PlayerEdit(props: Player) {
@@ -35,94 +38,27 @@ function PlayerEdit(props: Player) {
 }
 
 
-export default function BoardDetail() {
-  const data = {
-    id: "abcd",
-    name: "Class of 2020 leaderboard very long name without and end, now what",
-    code: "2020class",
-    type: "leaderboard",
-    updated_at: 1603460198000,
-    created_at: 1603460198000,
-    items: [
-      {
-        id: "0",
-        index: 0,
-        name: "Noal Lauren",
-        score: 150,
-      },
-      {
-        id: "1",
-        index: 1,
-        name: "David Ronaldo",
-        score: 100,
-      },
-      {
-        id: "2",
-        index: 2,
-        name: "David Ronaldo",
-        score: 99,
-      },
-      {
-        id: "3",
-        index: 3,
-        name: "David Ronaldo",
-        score: 98,
-      },
-      {
-        id: "4",
-        index: 4,
-        name: "David Ronaldo",
-        score: 97,
-      },
-      {
-        id: "5",
-        index: 5,
-        name: "David Ronaldo",
-        score: 96,
-      },
-      {
-        id: "6",
-        index: 6,
-        name: "David Ronaldo",
-        score: 95,
-      },
-      {
-        id: "7",
-        index: 7,
-        name: "David Ronaldo",
-        score: 94,
-      },
-      {
-        id: "8",
-        index: 8,
-        name: "David Ronaldo",
-        score: 93,
-      },
-      {
-        id: "9",
-        index: 9,
-        name: "David Ronaldo",
-        score: 92,
-      },
-      {
-        id: "10",
-        index: 10,
-        name: "David Ronaldo",
-        score: 91,
-      },
-      {
-        id: "323",
-        index: 323,
-        name: "Golia Beckham",
-        score: 5,
-      },
-    ],
-    max_score: 150,
-  };
+type Props = RouteComponentProps<{id: string}> & {}
 
-  return (
-    <>
+export default function BoardDetail(props: Props) {
+  const [board, setBoard] = useState<Board | void>()
+  const { fetchBoardById, fetching } = useBoards()
+  const { id } = props.match.params
+
+  const backToList = useCallback(() => props.history.push("/boards"), [props.history])
+
+  useEffect(() => {
+    fetchBoardById(id)
+      .then((board) => {
+        setBoard(board)
+      })
+    .catch(backToList)
+  }, [fetchBoardById, id, backToList])
+
+
+  return (<>
       <Navbar />
+      { fetching ? <Loading /> : board && (
       <section className="container px-4 mx-auto mt-6">
         <div className="flex flex-wrap bg-gray-100 shadow">
           <div className="flex-none w-full max-w-md px-6 py-16 text-sm bg-white shadow-inner">
@@ -133,7 +69,7 @@ export default function BoardDetail() {
                 </label>
                 <input
                   className="block w-full px-2 py-2 leading-tight border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"
-                  value={data.name}
+                  value={board.name}
                 />
               </div>
 
@@ -149,7 +85,7 @@ export default function BoardDetail() {
                     className="ml-1 uppercase border-none outline-none"
                     placeholder="CODE"
                     maxLength={10}
-                    value={data.code}
+                    value={board.code}
                   />
                 </div>
               </div>
@@ -175,7 +111,7 @@ export default function BoardDetail() {
                 <label className="inline-block mb-2 font-bold leading-relaxed">
                   Board items
                 </label>
-                { data.items && data.items.map(d => <PlayerEdit {...d} key={d.id} />) }
+                { board.items && board.items.map(d => <PlayerEdit {...d} key={d.id} />) }
               </div>
               <div>
                 <div className="self-center w-full px-4 py-2 text-center text-white bg-blue-500 rounded-full shadow cursor-pointer hover:opacity-75">
@@ -185,9 +121,8 @@ export default function BoardDetail() {
               </div>
             </div>
           </div>
-          <LeaderBoard {...data} />
+          <LeaderBoard {...board} />
         </div>
-      </section>
-    </>
-  )
+      </section>)}
+    </>)
 }

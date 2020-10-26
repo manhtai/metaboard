@@ -27,6 +27,7 @@ defmodule Metaboard.Boards do
   def create_board(attrs \\ %{}) do
     %Board{}
     |> Board.changeset(attrs)
+    |> Board.set_fixed_name_if_blank()
     |> Board.set_random_code_if_blank()
     |> Repo.insert()
   end

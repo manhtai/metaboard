@@ -45,8 +45,8 @@ type State = {
 
 export class BoardProvider extends React.Component<Props, State> {
   state: State = {
-    fetching: true,
-    saving: true,
+    fetching: false,
+    saving: false,
     error: '',
     board: null,
     currentUser: null,
@@ -113,7 +113,7 @@ export class BoardProvider extends React.Component<Props, State> {
   fetchBoardById = async (boardId: string) => {
     this.setState({ fetching: true })
     const board = await API.fetchBoardById(boardId)
-    this.setState({ fetching: false })
+    this.setState({ fetching: false, board })
     return board
   }
 
