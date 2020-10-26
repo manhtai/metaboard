@@ -30,7 +30,7 @@ function App() {
 
           <Route path="/s/:code" component={BoardSharing} />
 
-          <Redirect from="*" to="/landing" />
+          <Redirect from="/*" to="/landing" />
         </Switch>
       </BrowserRouter>
     );
@@ -45,7 +45,7 @@ function App() {
         <Route path="/s/:code" component={BoardSharing} />
 
         <Route path="/" component={BoardWrapper} />
-        <Redirect from="*" to="/boards" />
+        <Redirect from="/*" to="/boards" />
       </Switch>
     </BrowserRouter>
   );

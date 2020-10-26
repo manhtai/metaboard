@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Navbar from "./BoardNav";
 import BoardItem from "./BoardItem";
 import CreateBoardModal from "./CreateBoardModal";
+import Loading from "../common/Loading";
 import {RouteComponentProps} from 'react-router-dom';
 
 import {
@@ -20,7 +21,7 @@ export default function AllBoards(props: RouteComponentProps) {
   const [boards, setBoards] = useState<Board[]>([])
 
   const [showCreateModal, setShowCreateModal] = React.useState(false)
-  const { fetchAllBoards, createBoard, loading } = useBoards()
+  const { fetchAllBoards, onCreateBoard, fetching, saving, board, error } = useBoards()
 
   useEffect(() => {
     fetchAllBoards().then((boards) => {
@@ -32,6 +33,7 @@ export default function AllBoards(props: RouteComponentProps) {
   return (
     <>
       <Navbar type={"list"} />
+      { fetching ? <Loading /> :(
       <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
           <div className="flex flex-row flex-wrap justify-between mx-3 mb-10">
@@ -54,13 +56,17 @@ export default function AllBoards(props: RouteComponentProps) {
             </div>
           </div>
           <div>
-            { loading ? "Loading..." : boards.map(d => <BoardItem {...d} key={d.id} />) }
+            { boards.map(d => <BoardItem {...d} key={d.id} />) }
           </div>
         </div>
       </section>
+        ) }
       <CreateBoardModal
         {...props}
-        create={createBoard}
+        create={onCreateBoard}
+        board={board}
+        error={error}
+        loading={saving}
         visible={showCreateModal}
         onCancel={() => setShowCreateModal(false)}
         onOk={() => setShowCreateModal(false)}

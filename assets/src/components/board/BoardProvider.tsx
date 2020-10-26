@@ -5,19 +5,27 @@ import {Board} from '../../types';
 
 
 export const BoardContext = React.createContext<{
-  loading: boolean;
+  fetching: boolean;
+  saving: boolean;
   currentUser: any;
 
+  board: any;
+  error: string;
+
   onUpdateBoard: (boardId: string, params: any) => any;
-  createBoard: (params: any) => any;
+  onCreateBoard: (params: any) => any;
   fetchAllBoards: () => Promise<Array<Board>>;
   fetchBoardById: (id: string) => Promise<Board | void>;
 }>({
-  loading: true,
+  fetching: true,
+  saving: true,
   currentUser: null,
 
+  board: null,
+  error: '',
+
   onUpdateBoard: () => {},
-  createBoard: () => {},
+  onCreateBoard: () => {},
   fetchAllBoards: () => Promise.resolve([]),
   fetchBoardById: () => Promise.resolve(),
 })
@@ -27,17 +35,21 @@ export const useBoards = () => useContext(BoardContext)
 
 type Props = React.PropsWithChildren<{}>;
 type State = {
-  loading: boolean;
+  fetching: boolean;
+  saving: boolean;
   currentUser: any;
-  boardsById: {[key: string]: any};
+  board: any;
+  error: string;
 }
 
 
 export class BoardProvider extends React.Component<Props, State> {
   state: State = {
-    loading: true,
+    fetching: true,
+    saving: true,
+    error: '',
+    board: null,
     currentUser: null,
-    boardsById: {},
   }
 
   async componentDidMount() {
@@ -45,66 +57,97 @@ export class BoardProvider extends React.Component<Props, State> {
     this.setState({ currentUser })
   }
 
-  handleUpdateBoard = async (boardId: string, params: any) => {
-    this.setState({ loading: true })
-    const { boardsById } = this.state
-    const existing = boardsById[boardId]
+  handleCreateBoard = async (params: any) => {
+    const { board } = this.state
 
     this.setState({
-      boardsById: {
-        ...boardsById,
-        [boardId]: { ...existing, ...params }
-      }
+      board: {
+        ...board,
+        ...params,
+      },
+      saving: true,
+      error: '',
+    })
+
+    try {
+      const board = await API.createBoard({ board: params })
+      this.setState({ board, saving: false })
+    } catch (err) {
+      const error = this.parseError(err)
+      this.setState({ board, error, saving: false })
+      logger.error(err)
+    }
+  }
+
+  handleUpdateBoard = async (boardId: string, params: any) => {
+    const { board } = this.state
+
+    this.setState({
+      board: {
+        ...board,
+        ...params,
+      },
+      saving: true,
+      error: '',
     })
 
     try {
       await API.updateBoard(boardId, {
         board: params,
       })
-      this.setState({ loading: false })
+      this.setState({ saving: false })
     } catch (err) {
-      this.setState({ boardsById: boardsById, loading: false })
+      const error = this.parseError(err)
+      this.setState({ board, error, saving: false })
       logger.error(err)
     }
   }
 
   fetchAllBoards = async () => {
-    this.setState({ loading: true })
+    this.setState({ fetching: true })
     const boards = await API.fetchAllBoards()
-    this.setState({ loading: false })
+    this.setState({ fetching: false })
     return boards
   }
 
   fetchBoardById = async (boardId: string) => {
-    this.setState({ loading: true })
+    this.setState({ fetching: true })
     const board = await API.fetchBoardById(boardId)
-    this.setState({ loading: false })
+    this.setState({ fetching: false })
     return board
   }
 
-  createBoard = async (params: any) => {
-    this.setState({ loading: true })
-    const board = await API.createBoard(params)
-    this.setState({ loading: false })
-    return board
+  parseError = (err: any) => {
+    const errors = err.response?.body?.error?.errors
+    if (errors) {
+      const [field, error] = Object.entries(errors)[0]
+      return `${field} ${Array.isArray(error) ? error[0] : error}`
+    }
+    return err.response?.body?.error?.message || "Server error"
   }
 
   render() {
     const {
-      loading,
+      fetching,
+      saving,
       currentUser,
+      board,
+      error,
     } = this.state
 
     return (
       <BoardContext.Provider
         value={{
-            loading,
+            fetching,
+            saving,
             currentUser,
+            board,
+            error,
 
             onUpdateBoard: this.handleUpdateBoard,
+            onCreateBoard: this.handleCreateBoard,
             fetchBoardById: this.fetchBoardById,
             fetchAllBoards: this.fetchAllBoards,
-            createBoard: this.createBoard,
         }}
       >
         {this.props.children}

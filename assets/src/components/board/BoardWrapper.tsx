@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Switch,
   Route,
+  Redirect,
   RouteComponentProps,
 } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ const BoardContainer = (props: RouteComponentProps) => {
 
       <Route path="/boards/:id" component={BoardDetail} />
       <Route path="/boards" component={BoardList} />
+      <Redirect from="/*" to="/boards" />
     </Switch>
   )
 }

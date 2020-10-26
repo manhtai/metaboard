@@ -7,7 +7,10 @@ defmodule Metaboard.Boards do
 
   @spec list_boards(binary()) :: [Board.t()]
   def list_boards(user_id) do
-    Board |> where(user_id: ^user_id) |> Repo.all()
+    Board
+    |> where(user_id: ^user_id)
+    |> order_by(desc: :updated_at)
+    |> Repo.all()
   end
 
   @spec get_board!(binary()) :: Board.t() | nil

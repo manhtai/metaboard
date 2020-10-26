@@ -8,33 +8,31 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { RouteComponentProps } from 'react-router-dom';
-import logger from '../../logger'
 
 type Props = RouteComponentProps & {
   create: (params: any) => Promise<any>,
   visible: boolean,
+  loading: boolean,
   onCancel: () => void,
   onOk: () => void,
+  board: any,
+  error: any,
 }
 
 type State = {
-  loading: boolean;
   submitted: boolean;
   name: string;
   code?: string;
   type: string;
-  error: any;
 };
 
 export default class CreateBoardModal extends React.Component<Props, State> {
 
   state: State = {
-    loading: false,
     submitted: false,
     name: '',
     code: '',
     type: 'leaderboard',
-    error: null,
   };
 
   handleChangeName = (e: any) => {
@@ -49,34 +47,25 @@ export default class CreateBoardModal extends React.Component<Props, State> {
     this.setState({type: e.target.value});
   };
 
-  handleSubmit = (e: any) => {
+  handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    this.setState({loading: true, submitted: true, error: null});
     const {
       code,
       name,
       type,
     } = this.state;
 
-    const board = { code, name, type }
-    this.props.create({ board })
-      .then((res) => {
-        this.props.onOk()
-        this.props.history.push('/boards' + res?.board?.id)
-      })
-      .catch((err) => {
-        logger.error('Error!', err);
-        const error =
-          err.response?.body?.error?.message || 'Create new board failed';
+    await this.props.create({ code, name, type })
 
-        this.setState({error, loading: false});
-      });
+    if (!this.props.error) {
+      this.props.history.push("/boards/" + this.props.board.id)
+    }
   };
 
   render() {
     const {
-      name, code, type, error
+      name, type
     } = this.state
     return (
       <>
@@ -112,27 +101,9 @@ export default class CreateBoardModal extends React.Component<Props, State> {
                           className="block w-full px-3 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"
                           placeholder="My new board..."
                           maxLength={100}
-                          onInput={this.handleChangeName}
+                          onChange={this.handleChangeName}
                           value={name}
                         />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="inline-block mb-2 font-bold leading-relaxed">
-                          Short link (Optional)
-                        </label>
-                        <div
-                          className="block w-full px-3 py-3 leading-tight border border-gray-400 rounded-sm appearance-none hover:border-blue-500"
-                        >
-                          <span className="text-gray-700">{"https://metaboard.net/s/"}</span>
-                          <input
-                            className="ml-1 uppercase break-words border-none outline-none"
-                            placeholder="CODE"
-                            maxLength={10}
-                            onInput={this.handleChangeCode}
-                            value={code}
-                          />
-                        </div>
                       </div>
 
                       <div className="mb-4">
@@ -142,7 +113,7 @@ export default class CreateBoardModal extends React.Component<Props, State> {
                         <div className="relative">
                           <select
                             className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
-                            onInput={this.handleChangeType}
+                            onChange={this.handleChangeType}
                             value={type}
                             disabled
                           >
@@ -156,10 +127,10 @@ export default class CreateBoardModal extends React.Component<Props, State> {
                         </div>
                       </div>
 
-                      { error && (
+                      { this.props.error && (
                         <div className="mb-4 text-sm text-red-500">
                           <FontAwesomeIcon icon={faExclamationTriangle} />
-                              <span className="ml-1">{error}</span>
+                              <span className="ml-1">{this.props.error}</span>
                           </div>
                       )}
 
