@@ -7,6 +7,7 @@ import {
   faCheckCircle,
   faRocket,
   faUser,
+  faSync,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +25,7 @@ export default function Navbar(props: Props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const auth = useAuth()
   const { type } = props
-  const { saving, error } = useBoards()
+  const { saving, error, board } = useBoards()
 
   return (
     <>
@@ -58,9 +59,9 @@ export default function Navbar(props: Props) {
             }
           >
             <ul className="flex flex-col mr-auto list-none lg:flex-row hover:text-blue-600">
-              <li className="flex items-center">
+              <li className="py-4 lg:py-2">
                 <Link
-                  className="flex items-center py-4 lg:py-2"
+                  className="py-4 lg:py-2"
                   to={"/boards"}
                 >
                   <FontAwesomeIcon
@@ -74,7 +75,7 @@ export default function Navbar(props: Props) {
             <ul className="flex flex-col list-none lg:flex-row lg:ml-auto">
             {
               type === "list" ? (
-              <li className="flex items-center cursor-pointer hover:text-blue-600">
+              <li className="py-4 cursor-pointer lg:py-2 hover:text-blue-600">
                 <Link to={"/me"}>
                     <FontAwesomeIcon
                       icon={faUser}
@@ -87,7 +88,7 @@ export default function Navbar(props: Props) {
                 </Link>
               </li>
             ) : type === "me" ? (
-              <li className="flex items-center cursor-pointer hover:text-blue-600">
+              <li className="py-4 cursor-pointer lg:py-2 hover:text-blue-600">
                 <Link to={"/boards"}>
                     <FontAwesomeIcon
                       icon={faChevronLeft}
@@ -98,7 +99,7 @@ export default function Navbar(props: Props) {
               </li>
             ) : (
             <>
-              <li className="flex items-center mr-8 cursor-pointer hover:text-blue-600">
+              <li className="py-4 mr-8 cursor-pointer lg:py-2 hover:text-blue-600">
                 <Link to={"/boards"}>
                     <FontAwesomeIcon
                       icon={faChevronLeft}
@@ -107,15 +108,17 @@ export default function Navbar(props: Props) {
                     Home
                 </Link>
               </li>
-              <li className="flex items-center mr-8 cursor-pointer hover:text-blue-600">
+              <li className="py-4 mr-8 cursor-pointer lg:py-2 hover:text-blue-600">
+                <Link target={"_blank"} to={board ? "/s/" + board.code : "/boards"}>
                   <FontAwesomeIcon
                     icon={faShareSquare}
                     className="mr-1"
                   />
                   Share
+                </Link>
               </li>
 
-              { !saving && !error ? <li className="flex items-center text-green-600">
+              { !saving && !error ? <li className="w-16 py-4 text-center text-green-600 lg:py-2">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"
@@ -123,7 +126,15 @@ export default function Navbar(props: Props) {
                   Saved
               </li> : null}
 
-              { !saving && error ? <li className="flex items-center text-red-600">
+              { saving && <li className="w-16 py-4 text-center text-blue-600 lg:py-2">
+                  <FontAwesomeIcon
+                    icon={faSync}
+                    spin={true}
+                    className="mr-1"
+                  />
+              </li>}
+
+              { !saving && error ? <li className="w-16 py-4 text-center text-red-600 lg:py-2">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"

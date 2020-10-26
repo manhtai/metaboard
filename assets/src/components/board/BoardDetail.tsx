@@ -2,7 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 
 import Navbar from "./BoardNav";
 import LeaderBoard from "./LeaderBoard";
-import {Player, Board} from "../../types"
+import {Player} from "../../types"
 import {RouteComponentProps} from 'react-router-dom';
 import Loading from "../common/Loading";
 
@@ -15,7 +15,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {useBoards} from './BoardProvider'
 
 
-function PlayerEdit(props: Player) {
+type PlayerProps = Player & {
+  onChange: (items: any) => void;
+}
+
+
+function PlayerEdit(props: PlayerProps) {
   return (
     <div className="flex flex-row py-3 justify-items-stretch">
       <div className="flex-grow mr-2">
@@ -39,26 +44,63 @@ function PlayerEdit(props: Player) {
 
 
 type Props = RouteComponentProps<{id: string}> & {}
+type State = {
+  name: string;
+  code: string;
+  type: string;
+  items?: Player[];
+}
 
 export default function BoardDetail(props: Props) {
-  const [board, setBoard] = useState<Board | void>()
-  const { fetchBoardById, fetching } = useBoards()
+  const [state, setState] = useState<State>({
+    name: '',
+    code: '',
+    type: '',
+    items: [],
+  })
+
+  const { onUpdateBoard, fetchBoardById, fetching, board } = useBoards()
   const { id } = props.match.params
 
   const backToList = useCallback(() => props.history.push("/boards"), [props.history])
 
   useEffect(() => {
     fetchBoardById(id)
-      .then((board) => {
-        setBoard(board)
+      .then((b) => {
+        if (b) {
+          const { name, code, type, items } = b
+          setState({ name, code, type, items })
+        }
       })
     .catch(backToList)
   }, [fetchBoardById, id, backToList])
 
+  useEffect(() => {
+    const { name, code, type, items } = state
+    if (name && code && type && items) {
+      onUpdateBoard(id, { name, code, type, items })
+    }
+  }, [state, onUpdateBoard, id])
+
+  const handleChangeName = (e: any) => {
+    setState({ ...state, name: e.target.value })
+  }
+
+  const handleChangeCode = (e: any) => {
+    setState({ ...state, code: e.target.value })
+  }
+
+  const handleChangeType = (e: any) => {
+    setState({ ...state, type: e.target.value })
+  }
+
+  const handleChangeItems = (items: any) => {
+    setState({ ...state, items })
+  }
 
   return (<>
       <Navbar />
-      { fetching ? <Loading /> : board && (
+      { fetching ? <Loading /> : (
       <section className="container px-4 mx-auto mt-6">
         <div className="flex flex-wrap bg-gray-100 shadow">
           <div className="flex-none w-full max-w-md px-6 py-16 text-sm bg-white shadow-inner">
@@ -69,7 +111,8 @@ export default function BoardDetail(props: Props) {
                 </label>
                 <input
                   className="block w-full px-2 py-2 leading-tight border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"
-                  value={board.name}
+                  value={state.name}
+                  onChange={handleChangeName}
                 />
               </div>
 
@@ -82,10 +125,11 @@ export default function BoardDetail(props: Props) {
                 >
                   <span className="text-gray-700">{"https://metaboard.net/s/"}</span>
                   <input
-                    className="ml-1 uppercase border-none outline-none"
+                    className="ml-1 border-none outline-none"
                     placeholder="CODE"
                     maxLength={10}
-                    value={board.code}
+                    value={state.code}
+                    onChange={handleChangeCode}
                   />
                 </div>
               </div>
@@ -95,8 +139,12 @@ export default function BoardDetail(props: Props) {
                   Board type
                 </label>
                 <div className="relative">
-                  <select className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
-                  disabled>
+                  <select
+                    className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
+                    value={state.type}
+                    onChange={handleChangeType}
+                    disabled
+                  >
                     <option value="leaderboard">Leaderboard</option>
                     <option value="scoreboard">Scoreboard</option>
                     <option value="counter">Counter</option>
@@ -111,7 +159,7 @@ export default function BoardDetail(props: Props) {
                 <label className="inline-block mb-2 font-bold leading-relaxed">
                   Board items
                 </label>
-                { board.items && board.items.map(d => <PlayerEdit {...d} key={d.id} />) }
+                { state.items && state.items.map(d => <PlayerEdit {...d} key={d.id} onChange={handleChangeItems} />) }
               </div>
               <div>
                 <div className="self-center w-full px-4 py-2 text-center text-white bg-blue-500 rounded-full shadow cursor-pointer hover:opacity-75">
@@ -121,7 +169,7 @@ export default function BoardDetail(props: Props) {
               </div>
             </div>
           </div>
-          <LeaderBoard {...board} />
+          {board && <LeaderBoard {...board} />}
         </div>
       </section>)}
     </>)
