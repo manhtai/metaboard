@@ -1,9 +1,11 @@
 defmodule MetaboardWeb.BoardController do
   use MetaboardWeb, :controller
 
+  alias Ecto.Changeset
   alias Metaboard.Users.User
   alias Metaboard.Boards
   alias Metaboard.Boards.Board
+  alias MetaboardWeb.ErrorHelpers
 
   @spec index(Plug.Conn.t(), map) :: Plug.Conn.t()
   def index(conn, %{}) do
@@ -22,10 +24,16 @@ defmodule MetaboardWeb.BoardController do
           "user_id" => user_id,
         })
 
-      with {:ok, %Board{} = board} <- Boards.create_board(params) do
-        conn
-        |> put_status(:created)
-        |> render("show.json", board: board)
+      case Boards.create_board(params) do
+        {:ok, %Board{} = board} ->
+          conn
+          |> put_status(:created)
+          |> render("show.json", board: board)
+        {:error, changeset} ->
+          errors = Changeset.traverse_errors(changeset, &ErrorHelpers.translate_error/1)
+          conn
+          |> put_status(400)
+          |> json(%{error: %{status: 400, message: "Couldn't create board", errors: errors}})
       end
     end
   end
@@ -41,10 +49,16 @@ defmodule MetaboardWeb.BoardController do
     with %User{id: user_id} <- conn.assigns.current_user do
       board = Boards.get_board!(id, user_id)
 
-      with {:ok, %Board{} = board} <- Boards.update_board(board, board_params) do
-        conn
-        |> put_status(:created)
-        |> render("show.json", board: board)
+      case Boards.update_board(board, board_params) do
+        {:ok, %Board{} = board} ->
+          conn
+          |> put_status(:ok)
+          |> render("show.json", board: board)
+        {:error, changeset} ->
+          errors = Changeset.traverse_errors(changeset, &ErrorHelpers.translate_error/1)
+          conn
+          |> put_status(400)
+          |> json(%{error: %{status: 400, message: "Couldn't update board", errors: errors}})
       end
     end
   end

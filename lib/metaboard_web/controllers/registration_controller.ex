@@ -36,8 +36,8 @@ defmodule MetaboardWeb.RegistrationController do
 
   defp send_user_create_errors(conn, errors) do
     conn
-    |> put_status(500)
-    |> json(%{error: %{status: 500, message: "Couldn't create user", errors: errors}})
+    |> put_status(400)
+    |> json(%{error: %{status: 400, message: "Couldn't create user", errors: errors}})
   end
 
   defp send_server_error(conn, status_code, message) do

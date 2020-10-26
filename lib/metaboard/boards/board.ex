@@ -16,7 +16,7 @@ defmodule Metaboard.Boards.Board do
     field(:type, :string, default: BoardTypes.leaderboard)
     field(:disabled_at, :utc_datetime)
 
-    embeds_many(:items, Item)
+    embeds_many(:items, Item, on_replace: :delete)
 
     belongs_to(:user, User, foreign_key: :user_id, references: :id, type: :integer)
 
@@ -28,6 +28,11 @@ defmodule Metaboard.Boards.Board do
     |> cast(attrs, [:name, :code, :type, :user_id])
     |> cast_embed(:items)
     |> validate_required([:name, :type, :user_id])
+    |> validate_inclusion(:type, [
+      BoardTypes.leaderboard,
+      BoardTypes.scoreboard,
+      BoardTypes.counter,
+    ])
     |> unique_constraint(:code)
   end
 

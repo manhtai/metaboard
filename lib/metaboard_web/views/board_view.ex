@@ -37,7 +37,7 @@ defmodule MetaboardWeb.BoardView do
       name: board.name,
       type: board.type,
       code: board.code,
-      tiems: render_items(board.items)
+      items: render_items(board.items)
     }
   end
 
