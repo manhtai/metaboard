@@ -4,7 +4,7 @@ defmodule Metaboard.Boards.Item do
 
   embedded_schema do
     field(:name, :string)
-    field(:score, :integer)
+    field(:score, :float)
   end
 
 

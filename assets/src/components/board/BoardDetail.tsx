@@ -56,6 +56,7 @@ function PlayerEdit(props: PlayerProps) {
           value={state.name}
           onChange={handleChangeName}
           type="text"
+          required
         />
       </div>
       <div className="flex-none w-20 text-right">
@@ -64,6 +65,7 @@ function PlayerEdit(props: PlayerProps) {
           value={state.score}
           onChange={handleChangeScore}
           type="number"
+          required
         />
       </div>
       <div className="self-center flex-none w-4 text-right">
@@ -149,7 +151,7 @@ export default function BoardDetail(props: Props) {
       .map((item) => item.id === itemChanged.id ? itemChanged : item)
 
     setState({ ...state, items: changedItems })
-    debounceHandler({ items: changedItems.filter((item) => item.name != null && item.score != null) })
+    debounceHandler({ items: changedItems.filter((item) => item.name && !isNaN(parseFloat(item.score))) })
 
   }, [debounceHandler, state])
 
@@ -158,7 +160,7 @@ export default function BoardDetail(props: Props) {
     const changedItems = items.filter((item) => item.id !== id)
 
     setState({ ...state, items: changedItems })
-    debounceHandler({ items: changedItems.filter((item) => item.name != null && item.score != null) })
+    debounceHandler({ items: changedItems.filter((item) => item.name && !isNaN(parseFloat(item.score))) })
 
   }, [debounceHandler, state])
 
