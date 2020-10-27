@@ -25,7 +25,7 @@ export default function Navbar(props: Props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const auth = useAuth()
   const { type } = props
-  const { saving, error, board } = useBoards()
+  const { saving, errorMessage, board } = useBoards()
 
   return (
     <>
@@ -118,7 +118,7 @@ export default function Navbar(props: Props) {
                 </Link>
               </li>
 
-              { !saving && !error ? <li className="w-16 py-4 text-center text-green-600 lg:py-2">
+              { !saving && !errorMessage ? <li className="w-16 py-4 text-center text-green-600 lg:py-2">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"
@@ -134,7 +134,7 @@ export default function Navbar(props: Props) {
                   />
               </li>}
 
-              { !saving && error ? <li className="w-16 py-4 text-center text-red-600 lg:py-2">
+              { !saving && errorMessage ? <li className="w-16 py-4 text-center text-red-600 lg:py-2">
                   <FontAwesomeIcon
                     icon={faCheckCircle}
                     className="mr-1"

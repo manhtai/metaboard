@@ -21,7 +21,7 @@ export default function AllBoards(props: RouteComponentProps) {
   const [boards, setBoards] = useState<Board[]>([])
 
   const [showCreateModal, setShowCreateModal] = React.useState(false)
-  const { fetchAllBoards, onCreateBoard, fetching, saving, board, error } = useBoards()
+  const { fetchAllBoards, onCreateBoard, fetching, saving, board, errorMessage } = useBoards()
 
   useEffect(() => {
     fetchAllBoards().then((boards) => {
@@ -65,7 +65,7 @@ export default function AllBoards(props: RouteComponentProps) {
         {...props}
         create={onCreateBoard}
         board={board}
-        error={error}
+        error={errorMessage}
         loading={saving}
         visible={showCreateModal}
         onCancel={() => setShowCreateModal(false)}

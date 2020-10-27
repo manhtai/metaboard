@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import * as API from '../../api';
 import logger from '../../logger';
 import {Board} from '../../types';
+import {parseResponseErrors} from '../../util'
 
 
 export const BoardContext = React.createContext<{
@@ -10,7 +11,8 @@ export const BoardContext = React.createContext<{
   currentUser: any;
 
   board: any;
-  error: string;
+  errors: any;
+  errorMessage: string;
 
   onUpdateBoard: (boardId: string, params: any) => any;
   onCreateBoard: (params: any) => any;
@@ -22,7 +24,8 @@ export const BoardContext = React.createContext<{
   currentUser: null,
 
   board: null,
-  error: '',
+  errors: null,
+  errorMessage: '',
 
   onUpdateBoard: () => {},
   onCreateBoard: () => {},
@@ -39,7 +42,8 @@ type State = {
   saving: boolean;
   currentUser: any;
   board: any;
-  error: string;
+  errors: null;
+  errorMessage: string;
 }
 
 
@@ -47,7 +51,8 @@ export class BoardProvider extends React.Component<Props, State> {
   state: State = {
     fetching: false,
     saving: false,
-    error: '',
+    errors: null,
+    errorMessage: '',
     board: null,
     currentUser: null,
   }
@@ -66,15 +71,16 @@ export class BoardProvider extends React.Component<Props, State> {
         ...params,
       },
       saving: true,
-      error: '',
+      errorMessage: '',
+      errors: null,
     })
 
     try {
       const board = await API.createBoard({ board: params })
       this.setState({ board, saving: false })
     } catch (err) {
-      const error = this.parseError(err)
-      this.setState({ board, error, saving: false })
+      const [errorMessage, errors] = parseResponseErrors(err)
+      this.setState({ board, errors, errorMessage, saving: false })
       logger.error(err)
     }
   }
@@ -88,7 +94,8 @@ export class BoardProvider extends React.Component<Props, State> {
         ...params,
       },
       saving: true,
-      error: '',
+      errorMessage: '',
+      errors: null,
     })
 
     try {
@@ -97,8 +104,8 @@ export class BoardProvider extends React.Component<Props, State> {
       })
       this.setState({ saving: false })
     } catch (err) {
-      const error = this.parseError(err)
-      this.setState({ board, error, saving: false })
+      const [errorMessage, errors] = parseResponseErrors(err)
+      this.setState({ board, errors, errorMessage, saving: false })
       logger.error(err)
     }
   }
@@ -117,14 +124,6 @@ export class BoardProvider extends React.Component<Props, State> {
     return board
   }
 
-  parseError = (err: any) => {
-    const errors = err.response?.body?.error?.errors
-    if (errors) {
-      const [field, error] = Object.entries(errors)[0]
-      return `${field} ${Array.isArray(error) ? error[0] : error}`
-    }
-    return err.response?.body?.error?.message || "Server error"
-  }
 
   render() {
     const {
@@ -132,7 +131,8 @@ export class BoardProvider extends React.Component<Props, State> {
       saving,
       currentUser,
       board,
-      error,
+      errors,
+      errorMessage,
     } = this.state
 
     return (
@@ -142,7 +142,8 @@ export class BoardProvider extends React.Component<Props, State> {
             saving,
             currentUser,
             board,
-            error,
+            errors,
+            errorMessage,
 
             onUpdateBoard: this.handleUpdateBoard,
             onCreateBoard: this.handleCreateBoard,

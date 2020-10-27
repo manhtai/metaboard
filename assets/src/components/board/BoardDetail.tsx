@@ -5,6 +5,7 @@ import LeaderBoard from "./LeaderBoard";
 import {Player} from "../../types"
 import {RouteComponentProps} from 'react-router-dom';
 import Loading from "../common/Loading";
+import debounce from "lodash/debounce";
 
 import {
   faPlus,
@@ -59,10 +60,17 @@ export default function BoardDetail(props: Props) {
     items: [],
   })
 
-  const { onUpdateBoard, fetchBoardById, fetching, board } = useBoards()
+  const { onUpdateBoard, fetchBoardById, fetching, board, errors } = useBoards()
   const { id } = props.match.params
 
   const backToList = useCallback(() => props.history.push("/boards"), [props.history])
+
+  const debounceHandler = useCallback(
+    debounce((params: any) => {
+      onUpdateBoard(id, params)
+    }, 500),
+    []
+  );
 
   useEffect(() => {
     fetchBoardById(id)
@@ -75,28 +83,29 @@ export default function BoardDetail(props: Props) {
     .catch(backToList)
   }, [fetchBoardById, id, backToList])
 
-  useEffect(() => {
-    const { name, code, type, items } = state
-    if (name && code && type && items) {
-      onUpdateBoard(id, { name, code, type, items })
-    }
-  }, [state, onUpdateBoard, id])
 
-  const handleChangeName = (e: any) => {
-    setState({ ...state, name: e.target.value })
-  }
+  const handleChangeName = useCallback((e: any) => {
+    const name = e.target.value
+    setState({ ...state, name })
+    debounceHandler({ name })
+  }, [debounceHandler, state])
 
-  const handleChangeCode = (e: any) => {
-    setState({ ...state, code: e.target.value })
-  }
+  const handleChangeCode = useCallback((e: any) => {
+    const code = e.target.value.replaceAll(" ", "")
+    setState({ ...state, code })
+    debounceHandler({ code })
+  }, [debounceHandler, state])
 
-  const handleChangeType = (e: any) => {
-    setState({ ...state, type: e.target.value })
-  }
+  const handleChangeType = useCallback((e: any) => {
+    const type = e.target.value
+    setState({ ...state, type })
+    debounceHandler({ type })
+  }, [debounceHandler, state])
 
-  const handleChangeItems = (items: any) => {
+  const handleChangeItems = useCallback((items: any) => {
     setState({ ...state, items })
-  }
+    debounceHandler({ items })
+  }, [debounceHandler, state])
 
   return (<>
       <Navbar />
@@ -113,6 +122,7 @@ export default function BoardDetail(props: Props) {
                   className="block w-full px-2 py-2 leading-tight border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"
                   value={state.name}
                   onChange={handleChangeName}
+                  required
                 />
               </div>
 
@@ -121,7 +131,7 @@ export default function BoardDetail(props: Props) {
                   Short link
                 </label>
                 <div
-                  className="block w-full px-3 py-3 leading-tight border border-gray-400 rounded-sm appearance-none hover:border-blue-500"
+                  className="block w-full px-2 py-2 leading-tight border border-gray-400 rounded-sm appearance-none hover:border-blue-500"
                 >
                   <span className="text-gray-700">{"https://metaboard.net/s/"}</span>
                   <input
@@ -130,8 +140,10 @@ export default function BoardDetail(props: Props) {
                     maxLength={10}
                     value={state.code}
                     onChange={handleChangeCode}
+                    required
                   />
                 </div>
+                {errors && errors.code && (<div className="mt-1 text-red-500">{"This link " + errors.code}</div>)}
               </div>
 
               <div className="mb-4">
@@ -140,9 +152,10 @@ export default function BoardDetail(props: Props) {
                 </label>
                 <div className="relative">
                   <select
-                    className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
+                    className="block w-full px-1 py-2 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
                     value={state.type}
                     onChange={handleChangeType}
+                    required
                     disabled
                   >
                     <option value="leaderboard">Leaderboard</option>

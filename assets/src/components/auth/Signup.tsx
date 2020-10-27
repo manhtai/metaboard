@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {RouteComponentProps, Link} from 'react-router-dom';
 import {useAuth} from './AuthProvider';
 import logger from '../../logger';
+import {parseResponseErrors} from '../../util'
 
 type Props = RouteComponentProps & {
   onSubmit: (params: any) => Promise<void>;
@@ -91,9 +92,7 @@ class SignUp extends React.Component<Props, State> {
       .then(() => this.props.history.push('/boards'))
       .catch((err) => {
         logger.error('Error!', err);
-        const error =
-          err.response?.body?.error?.message || 'Create new user failed';
-
+        const [error] = parseResponseErrors(err)
         this.setState({error, loading: false});
       });
   };

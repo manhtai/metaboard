@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {parseResponseErrors} from '../../util'
 
 import {RouteComponentProps, Link} from 'react-router-dom';
 import {useAuth} from './AuthProvider';
@@ -50,9 +51,7 @@ class Login extends React.Component<Props, State> {
       .then(() => this.props.history.push('/boards'))
       .catch((err) => {
         logger.error('Error!', err);
-        const error =
-          err.response?.body?.error?.message || 'Invalid credentials';
-
+        const [error] = parseResponseErrors(err)
         this.setState({error, loading: false});
       });
   };
