@@ -10,7 +10,7 @@ import {formatDateAgo, getColorByOrder} from "../../util";
 import {Board, Player} from "../../types"
 
 
-function PlayerBar(props: Player) {
+function PlayerBar(props: Player & {index: number}) {
 
   const color = " bg-" + getColorByOrder(props.index) + "-500 "
 
@@ -24,17 +24,21 @@ function PlayerBar(props: Player) {
         </div>
         <div className="relative self-center flex-1 w-64 font-semibold">
           <div
-            className={"absolute p-3 overflow-hidden text-white whitespace-no-wrap rounded transition-all ease-out duration-1000 " + color}
+            className={"absolute py-3 overflow-hidden text-white whitespace-no-wrap rounded transition-all ease-out duration-1000 " + color}
             style={{ width: props.percentage }}
           >
-            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon className="ml-1" icon={faTrophy} /> : null}
+            <span className="px-3">
+              {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon className="ml-1" icon={faTrophy} /> : null}
+            </span>
           </div>
-          <div className="w-full p-3 truncate bg-gray-200 rounded">
-            {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon className="ml-1" icon={faTrophy} /> : null}
+          <div className="w-full py-3 truncate bg-gray-200 rounded">
+            <span className="px-3">
+              {props.name} {props.index === 0 && props.score ? <FontAwesomeIcon className="ml-1" icon={faTrophy} /> : null}
+            </span>
           </div>
         </div>
         <div className="self-center flex-none w-24 pl-4 font-semibold">
-          {props.score}p
+          {props.score}
         </div>
       </div>
     </>
@@ -52,7 +56,10 @@ export default class LeaderBoard extends React.Component<Board, State> {
   }
 
   render() {
-   return (
+    const maxScore = this.props.items.reduce((p, c) => Math.max(p, parseInt(c.score, 10) || 0), 0)
+    const sortedItems = [...this.props.items].sort((a, b) => b.score - a.score)
+
+    return (
     <>
       <div className="w-full pt-8 pb-16 mx-auto mt-6 max-w-screen-md">
         <div className="max-w-xl px-2 mx-auto mt-6 mb-10 ">
@@ -61,11 +68,12 @@ export default class LeaderBoard extends React.Component<Board, State> {
           </h1>
         </div>
         <div className="mb-10">
-          { this.props.items && this.props.items
-            .map(d =>
+          { sortedItems
+            .map((d, index) =>
               ({
                 ...d,
-                percentage: (this.props.max_score && this.state && this.state.loaded ? d.score/this.props.max_score*100 : 0) + "%"
+                index,
+                percentage: (maxScore && this.state && this.state.loaded ? d.score/maxScore*100 : 0) + "%"
               })
             ).map(d => <PlayerBar {...d} key={d.id} />)
             }

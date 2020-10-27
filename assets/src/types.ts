@@ -5,7 +5,6 @@ export type User = {
 };
 
 export type Player = {
-  index: number,
   id: string,
   name: string,
   score: number,
@@ -20,5 +19,5 @@ export type Board = {
   updated_at: number;
   created_at: number;
   max_score?: number;
-  items?: Player[],
+  items: any[],
 };

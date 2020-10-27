@@ -3,6 +3,7 @@ defmodule MetaboardWeb.ItemView do
 
   def render("item.json", %{item: item}) do
     %{
+      id: item.id,
       name: item.name,
       score: item.score,
     }

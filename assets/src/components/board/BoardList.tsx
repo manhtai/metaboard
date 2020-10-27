@@ -19,13 +19,15 @@ import {Board} from '../../types'
 
 export default function AllBoards(props: RouteComponentProps) {
   const [boards, setBoards] = useState<Board[]>([])
+  const [loading, setLoading] = useState(true)
 
   const [showCreateModal, setShowCreateModal] = React.useState(false)
-  const { fetchAllBoards, onCreateBoard, fetching, saving, board, errorMessage } = useBoards()
+  const { fetchAllBoards, onCreateBoard, saving, board, errorMessage } = useBoards()
 
   useEffect(() => {
     fetchAllBoards().then((boards) => {
       setBoards(boards)
+      setLoading(false)
     })
   }, [fetchAllBoards])
 
@@ -33,7 +35,7 @@ export default function AllBoards(props: RouteComponentProps) {
   return (
     <>
       <Navbar type={"list"} />
-      { fetching ? <Loading /> :(
+      { loading ? <Loading /> :(
       <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
           <div className="flex flex-row flex-wrap justify-between mx-3 mb-10">

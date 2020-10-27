@@ -20,7 +20,7 @@ export const BoardContext = React.createContext<{
   fetchBoardById: (id: string) => Promise<Board | void>;
 }>({
   fetching: true,
-  saving: true,
+  saving: false,
   currentUser: null,
 
   board: null,
@@ -49,7 +49,7 @@ type State = {
 
 export class BoardProvider extends React.Component<Props, State> {
   state: State = {
-    fetching: false,
+    fetching: true,
     saving: false,
     errors: null,
     errorMessage: '',
@@ -99,10 +99,10 @@ export class BoardProvider extends React.Component<Props, State> {
     })
 
     try {
-      await API.updateBoard(boardId, {
+      const board = await API.updateBoard(boardId, {
         board: params,
       })
-      this.setState({ saving: false })
+      this.setState({ board, saving: false })
     } catch (err) {
       const [errorMessage, errors] = parseResponseErrors(err)
       this.setState({ board, errors, errorMessage, saving: false })
