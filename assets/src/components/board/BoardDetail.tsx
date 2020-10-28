@@ -11,6 +11,9 @@ import { v4 } from "uuid";
 import {
   faPlus,
   faTimes,
+  faSort,
+  faSortUp,
+  faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,6 +59,7 @@ function PlayerEdit(props: PlayerProps) {
           value={state.name}
           onChange={handleChangeName}
           type="text"
+          placeholder="Name"
           required
         />
       </div>
@@ -64,6 +68,7 @@ function PlayerEdit(props: PlayerProps) {
           className="w-full p-1 border border-gray-400 rounded-sm appearance-none focus:border-blue-500 focus:outline-none"
           value={state.score}
           onChange={handleChangeScore}
+          placeholder="Score"
           type="number"
           required
         />
@@ -86,6 +91,8 @@ type State = {
   name: string;
   code: string;
   type: string;
+  sortName: number;
+  sortScore: number;
   items: any[];
 }
 
@@ -96,6 +103,8 @@ export default function BoardDetail(props: Props) {
     code: '',
     type: '',
     items: [],
+    sortName: 0,
+    sortScore: 0,
   })
 
   const { onUpdateBoard, fetchBoardById, board, errors } = useBoards()
@@ -116,7 +125,7 @@ export default function BoardDetail(props: Props) {
       .then((b) => {
         if (b) {
           const { name, code, type } = b
-          setState({ name, code, type, items: b.items || [], loading: false })
+          setState({ name, code, type, items: b.items || [], loading: false, sortScore: 0, sortName: 0 })
         }
       })
     .catch(backToList)
@@ -168,6 +177,36 @@ export default function BoardDetail(props: Props) {
     const { items } = state
     setState({ ...state, items: [...items, {id: v4(), name: '', score: 0}]})
   }
+
+  const sortByName = useCallback(() => {
+    const { sortName, items } = state
+    if (sortName === 0) {
+      const sortedItems = items.sort((a, b) => a.name.localeCompare(b.name))
+      setState({ ...state, items: sortedItems, sortName: 1 })
+      debounceHandler({ items: sortedItems })
+    } else if (sortName === 1) {
+      const sortedItems = items.sort((a, b) => b.name.localeCompare(a.name))
+      setState({ ...state, items: sortedItems, sortName: -1 })
+      debounceHandler({ items: sortedItems })
+    } else {
+      setState({ ...state, sortName: 0 })
+    }
+  }, [debounceHandler, state])
+
+  const sortByScore = useCallback(() => {
+    const { sortScore, items } = state
+    if (sortScore === 0) {
+      const sortedItems = items.sort((a, b) => a.score - b.score)
+      setState({ ...state, items: sortedItems, sortScore: 1 })
+      debounceHandler({ items: sortedItems })
+    } else if (sortScore === 1) {
+      const sortedItems = items.sort((a, b) => b.score - a.score)
+      setState({ ...state, items: sortedItems, sortScore: -1 })
+      debounceHandler({ items: sortedItems })
+    } else {
+      setState({ ...state, sortScore: 0 })
+    }
+  }, [debounceHandler, state])
 
   return (<>
       <Navbar />
@@ -231,9 +270,31 @@ export default function BoardDetail(props: Props) {
               </div>
 
               <div className="mb-4">
-                <label className="inline-block mb-2 font-bold leading-relaxed">
+                <label className="inline-block font-bold leading-relaxed">
                   Board items
                 </label>
+                <div className="flex flex-row mt-2 justify-items-stretch">
+                  <div className="flex flex-grow mr-2 place-items-center">
+                    <div className="mr-1">Name</div>
+                    <span className="cursor-pointer" onClick={sortByName}>
+                      {
+                        state.sortName === 1 ? <FontAwesomeIcon icon={faSortUp} className="place-items-start" /> :
+                        state.sortName === -1 ? <FontAwesomeIcon icon={faSortDown} className="place-items-start" /> :
+                        <FontAwesomeIcon icon={faSort} className="place-items-start" />
+                      }
+                    </span>
+                  </div>
+                  <div className="flex flex-none w-24 place-items-center">
+                    <div className="mr-1">Score</div>
+                    <span className="cursor-pointer" onClick={sortByScore}>
+                      {
+                        state.sortScore === 1 ? <FontAwesomeIcon icon={faSortUp} className="place-items-start" /> :
+                        state.sortScore === -1 ? <FontAwesomeIcon icon={faSortDown} className="place-items-start" /> :
+                        <FontAwesomeIcon icon={faSort} className="place-items-start" />
+                      }
+                    </span>
+                  </div>
+                </div>
                 {
                   state.items.map(
                     d => <PlayerEdit
