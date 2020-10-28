@@ -1,96 +1,90 @@
 import React from 'react';
+import {Channel, Socket} from 'phoenix';
+import {throttle} from 'lodash';
 
 import LeaderBoard from "./LeaderBoard";
+import Loading from "../common/Loading";
+import {Board} from "../../types"
+import {SOCKET_URL} from '../../socket';
+import logger from '../../logger';
+import * as API from '../../api';
+
+import {RouteComponentProps} from "react-router-dom"
 
 
-export default function BoardSharing() {
-  const data = {
-    id: "abcd",
-    name: "Class of 2020 leaderboard very long name without and end, now what",
-    code: "2020class",
-    type: "leaderboard",
-    updated_at: 1603460198000,
-    created_at: 1603460198000,
-    items: [
-      {
-        id: "0",
-        index: 0,
-        name: "Noal Lauren",
-        score: 150,
-      },
-      {
-        id: "1",
-        index: 1,
-        name: "David Ronaldo",
-        score: 100,
-      },
-      {
-        id: "2",
-        index: 2,
-        name: "David Ronaldo",
-        score: 99,
-      },
-      {
-        id: "3",
-        index: 3,
-        name: "David Ronaldo",
-        score: 98,
-      },
-      {
-        id: "4",
-        index: 4,
-        name: "David Ronaldo",
-        score: 97,
-      },
-      {
-        id: "5",
-        index: 5,
-        name: "David Ronaldo",
-        score: 96,
-      },
-      {
-        id: "6",
-        index: 6,
-        name: "David Ronaldo",
-        score: 95,
-      },
-      {
-        id: "7",
-        index: 7,
-        name: "David Ronaldo",
-        score: 94,
-      },
-      {
-        id: "8",
-        index: 8,
-        name: "David Ronaldo",
-        score: 93,
-      },
-      {
-        id: "9",
-        index: 9,
-        name: "David Ronaldo",
-        score: 92,
-      },
-      {
-        id: "10",
-        index: 10,
-        name: "David Ronaldo",
-        score: 91,
-      },
-      {
-        id: "323",
-        index: 323,
-        name: "Golia Beckham",
-        score: 50,
-      },
-    ],
-    max_score: 150,
-  };
+type Props = RouteComponentProps<{code: string}>;
+type State = {
+  loading: boolean;
+  board: Board | null;
+}
 
-  return (
-    <>
-      <LeaderBoard {...data} />
-    </>
-  )
+export default class BoardSharing extends React.Component<Props, State> {
+  state: State = {
+    loading: true,
+    board: null,
+  }
+
+  socket: Socket | null = null;
+  channel: Channel | null = null;
+
+  async componentDidMount() {
+    const boardCode = this.props.match.params.code
+    this.joinBoardChannel(boardCode);
+  }
+
+  joinBoardChannel(boardCode: string) {
+    if (this.socket && this.socket.disconnect) {
+      logger.debug('Existing socket:', this.socket);
+      this.socket.disconnect();
+    }
+
+    this.socket = new Socket(SOCKET_URL, {
+      params: {token: API.getAccessToken()},
+    });
+    this.socket.connect();
+
+    this.socket.onError(
+      throttle(
+        () => logger.error('Error connecting to socket. Try refreshing the page.'),
+        30 * 1000 // throttle every 30 secs
+      )
+    );
+
+    if (this.channel && this.channel.leave) {
+      logger.debug('Existing channel:', this.channel);
+      this.channel.leave();
+    }
+
+    this.channel = this.socket.channel(`board:${boardCode}`);
+
+    this.channel.on('shout', (board: Board) => {
+      this.handleNewUpdate(board);
+    });
+
+    this.channel
+      .join()
+      .receive('ok', (res: any) => {
+        logger.debug('Joined channel successfully', res);
+      })
+      .receive('error', (err: any) => {
+        logger.error('Unable to join', err);
+        setTimeout(
+          () => this.joinBoardChannel(boardCode),
+          10000
+        );
+      });
+  }
+
+  handleNewUpdate(board: Board) {
+    this.setState({ board, loading: false })
+  }
+
+  render() {
+    const { loading, board } = this.state
+    return (
+      <>
+        { loading ? <Loading /> : board && <LeaderBoard {...board} />}
+      </>
+    )
+  }
 }

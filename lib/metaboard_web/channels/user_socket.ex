@@ -2,7 +2,7 @@ defmodule MetaboardWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", MetaboardWeb.RoomChannel
+  channel "board:*", MetaboardWeb.BoardChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -16,6 +16,13 @@ defmodule MetaboardWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   @impl true
+  def connect(%{"token" => token}, socket, _connect_info) do
+    case get_credentials(socket, token, otp_app: :metaboard) do
+      nil -> {:ok, socket}
+      user -> {:ok, assign(socket, :current_user, user)}
+    end
+  end
+
   def connect(_params, socket, _connect_info) do
     {:ok, socket}
   end
@@ -32,4 +39,17 @@ defmodule MetaboardWeb.UserSocket do
   # Returning `nil` makes this socket anonymous.
   @impl true
   def id(_socket), do: nil
+
+  defp get_credentials(socket, signed_token, config) do
+    conn = %Plug.Conn{secret_key_base: socket.endpoint.config(:secret_key_base)}
+    store_config = [backend: Pow.Store.Backend.EtsCache]
+    salt = Atom.to_string(MetaboardWeb.APIAuthPlug)
+
+    with {:ok, token} <- Pow.Plug.verify_token(conn, salt, signed_token, config),
+         {user, _metadata} <- Pow.Store.CredentialsCache.get(store_config, token) do
+      user
+    else
+      _any -> nil
+    end
+  end
 end

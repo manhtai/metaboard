@@ -23,6 +23,21 @@ defmodule Metaboard.Boards do
     Board |> Repo.get_by!([id: id, user_id: user_id])
   end
 
+  @spec get_board_by_code(binary()) :: Board.t() | nil
+  def get_board_by_code(code) do
+    Board |> Repo.get_by([code: code])
+  end
+
+  @spec boardcast_to_channel!(Board.t()) :: Board.t()
+  def boardcast_to_channel!(board) do
+    topic = "board:" <> board.code
+    MetaboardWeb.Endpoint.broadcast!(
+      topic,
+      "shout",
+      MetaboardWeb.BoardView.render("expanded.json", board: board)
+    )
+  end
+
   @spec create_board(map()) :: {:ok, Board.t()} | {:error, Ecto.Changeset.t()}
   def create_board(attrs \\ %{}) do
     %Board{}

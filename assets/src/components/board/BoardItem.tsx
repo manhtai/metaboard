@@ -21,7 +21,7 @@ export default function BoardItem(props: Board) {
           </div>
         </div>
 
-        <div className="w-full mb-2 text-xs text-gray-700 uppercase truncate">
+        <div className="w-full mb-2 text-xs text-gray-700 truncate">
           {props.code}
         </div>
 

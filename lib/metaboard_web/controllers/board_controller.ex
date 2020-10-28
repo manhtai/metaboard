@@ -51,6 +51,8 @@ defmodule MetaboardWeb.BoardController do
 
       case Boards.update_board(board, board_params) do
         {:ok, %Board{} = board} ->
+          Boards.boardcast_to_channel!(board)
+
           conn
           |> put_status(:ok)
           |> render("show.json", board: board)

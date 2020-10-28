@@ -99,13 +99,10 @@ export const fetchBoardById = async (
   id: string,
   token = getAccessToken()
 ) => {
-  if (!token) {
-    throw new Error('Invalid token!');
-  }
 
   return request
     .get(`/api/boards/${id}`)
-    .set('Authorization', token)
+    .set('Authorization', token || '')
     .then((res) => res.body.data);
 }
 
