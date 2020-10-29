@@ -16,7 +16,7 @@ export const BoardContext = React.createContext<{
 
   onUpdateBoard: (boardId: string, params: any) => any;
   onCreateBoard: (params: any) => any;
-  fetchAllBoards: () => Promise<Array<Board>>;
+  fetchAllBoards: (searchTerm?: string) => Promise<Array<Board>>;
   fetchBoardById: (id: string) => Promise<Board | void>;
 }>({
   fetching: true,
@@ -110,9 +110,9 @@ export class BoardProvider extends React.Component<Props, State> {
     }
   }
 
-  fetchAllBoards = async () => {
+  fetchAllBoards = async (searchTerm: string = '') => {
     this.setState({ fetching: true })
-    const boards = await API.fetchAllBoards()
+    const boards = await API.fetchAllBoards(searchTerm)
     this.setState({ fetching: false })
     return boards
   }

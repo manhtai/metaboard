@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
 import Navbar from "./BoardNav";
 import BoardItem from "./BoardItem";
 import CreateBoardModal from "./CreateBoardModal";
-import Loading from "../common/Loading";
 import {RouteComponentProps} from 'react-router-dom';
+import {debounce} from "lodash"
 
 import {
   faPlus,
@@ -17,14 +17,52 @@ import {useBoards} from './BoardProvider'
 import {Board} from '../../types'
 
 
+function EmptyBoard({ isSearching = false }: { isSearching?: boolean }) {
+  return (
+    <div className="block px-6 py-3 mx-3 my-4 text-center bg-gray-100 border-2 border-dashed rounded-lg">
+      { isSearching ? "No boards found." : "You don't have any board yet." }
+    </div>
+  )
+}
+
+function LoadingBoard() {
+  return (
+    <div className="block px-6 py-3 mx-3 my-4 border border-gray-300 rounded-lg shadow">
+      <div className="flex animate-pulse space-x-4">
+        <div className="flex-1 py-1 space-y-4">
+          <div className="w-3/4 h-4 bg-gray-400 rounded"></div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-400 rounded"></div>
+            <div className="w-5/6 h-4 bg-gray-400 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
 export default function AllBoards(props: RouteComponentProps) {
   const [boards, setBoards] = useState<Board[]>([])
+  const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(true)
 
   const [showCreateModal, setShowCreateModal] = React.useState(false)
   const { fetchAllBoards, onCreateBoard, saving, board, errorMessage } = useBoards()
 
+  const searchBoards = useCallback(
+    debounce((term) => {
+      setLoading(true)
+      fetchAllBoards(term).then((boards) => {
+        setBoards(boards)
+        setLoading(false)
+      })
+   }, 1000),
+    [],
+  )
+
   useEffect(() => {
+    setLoading(true)
     fetchAllBoards().then((boards) => {
       setBoards(boards)
       setLoading(false)
@@ -32,10 +70,16 @@ export default function AllBoards(props: RouteComponentProps) {
   }, [fetchAllBoards])
 
 
+  const handleSearch = (event: any) => {
+    const term = event.target.value
+    setSearchTerm(term)
+    searchBoards(term)
+  }
+
+
   return (
     <>
       <Navbar type={"list"} />
-      { loading ? <Loading /> :(
       <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
           <div className="flex flex-row flex-wrap justify-between mx-3 mb-10">
@@ -54,15 +98,20 @@ export default function AllBoards(props: RouteComponentProps) {
               <input
                 className="flex-1 w-full px-2 py-1 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-r-sm focus:outline-none focus:border-blue-500"
                 placeholder="Type to search..."
+                value={searchTerm}
+                onChange={handleSearch}
               />
             </div>
           </div>
           <div>
-            { boards.map(d => <BoardItem {...d} key={d.id} />) }
+            {
+              loading ? <LoadingBoard />
+              : boards.length ? boards.map(d => <BoardItem {...d} key={d.id} />)
+              : <EmptyBoard isSearching={searchTerm.length > 0} />
+            }
           </div>
         </div>
       </section>
-        ) }
       <CreateBoardModal
         {...props}
         create={onCreateBoard}

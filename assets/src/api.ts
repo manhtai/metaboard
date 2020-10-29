@@ -82,14 +82,17 @@ export const logout = async () => {
 
 
 export const fetchAllBoards = async (
+  searchTerm: string = '',
   token = getAccessToken()
 ) => {
   if (!token) {
     throw new Error('Invalid token!');
   }
 
+  const path = searchTerm ? `/api/boards?q=${searchTerm}` : `/api/boards`
+
   return request
-    .get(`/api/boards`)
+    .get(path)
     .set('Authorization', token)
     .then((res) => res.body.data);
 }

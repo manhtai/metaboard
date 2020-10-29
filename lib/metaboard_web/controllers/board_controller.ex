@@ -8,9 +8,9 @@ defmodule MetaboardWeb.BoardController do
   alias MetaboardWeb.ErrorHelpers
 
   @spec index(Plug.Conn.t(), map) :: Plug.Conn.t()
-  def index(conn, %{}) do
+  def index(conn, params) do
     with %User{id: user_id} <- conn.assigns.current_user do
-      boards = Boards.list_boards(user_id)
+      boards = Boards.list_boards(user_id, params)
       render(conn, "index.json", boards: boards)
     end
   end

@@ -5,12 +5,25 @@ defmodule Metaboard.Boards do
   alias Metaboard.Repo
   alias Metaboard.Boards.Board
 
-  @spec list_boards(binary()) :: [Board.t()]
-  def list_boards(user_id) do
+  @spec list_boards(binary(), map) :: [Board.t()]
+  def list_boards(user_id, params) do
     Board
     |> where(user_id: ^user_id)
+    |> where(^filter_where(params))
     |> order_by(desc: :updated_at)
     |> Repo.all()
+  end
+
+  @spec filter_where(map) :: Ecto.Query.DynamicExpr.t()
+  def filter_where(params) do
+    Enum.reduce(params, dynamic(true), fn
+      {"q", value}, dynamic ->
+        dynamic([p], ^dynamic and ilike(p.name, ^"%#{value}%"))
+
+      {_, _}, dynamic ->
+        # Not a where parameter
+        dynamic
+    end)
   end
 
   @spec get_board!(binary()) :: Board.t() | nil

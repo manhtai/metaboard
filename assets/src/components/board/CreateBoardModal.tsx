@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { RouteComponentProps } from 'react-router-dom';
+import {haiku} from '../../util'
 
 type Props = RouteComponentProps & {
   create: (params: any) => Promise<any>,
@@ -56,7 +57,7 @@ export default class CreateBoardModal extends React.Component<Props, State> {
       type,
     } = this.state;
 
-    await this.props.create({ code, name, type })
+    await this.props.create({ code, name: name || haiku(), type })
 
     if (!this.props.error) {
       this.props.history.push("/boards/" + this.props.board.id)

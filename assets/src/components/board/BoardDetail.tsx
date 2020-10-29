@@ -120,12 +120,25 @@ export default function BoardDetail(props: Props) {
     []
   );
 
+  const getDefaultItem = () => ({id: v4(), name: '', score: 0})
+
   useEffect(() => {
     fetchBoardById(id)
       .then((b) => {
         if (b) {
           const { name, code, type } = b
-          setState({ name, code, type, items: b.items || [], loading: false, sortScore: 0, sortName: 0 })
+          const items = b.items && b.items.length > 0
+            ? b.items
+            : [getDefaultItem(), getDefaultItem(), getDefaultItem()]
+          setState({
+            name,
+            code,
+            type,
+            items,
+            loading: false,
+            sortScore: 0,
+            sortName: 0,
+          })
         }
       })
     .catch(backToList)
@@ -175,7 +188,7 @@ export default function BoardDetail(props: Props) {
 
   const handleAddMoreItem = () => {
     const { items } = state
-    setState({ ...state, items: [...items, {id: v4(), name: '', score: 0}]})
+    setState({ ...state, items: [...items, getDefaultItem()]})
   }
 
   const sortByName = useCallback(() => {
