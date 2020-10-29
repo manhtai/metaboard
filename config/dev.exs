@@ -1,12 +1,10 @@
 use Mix.Config
 
+database_url = System.get_env("DATABASE_URL") || "ecto://postgres:postgres@localhost:25432/metaboard_dev"
+
 # Configure your database
 config :metaboard, Metaboard.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "metaboard_dev",
-  hostname: "localhost",
-  port: 25432,
+  url: database_url
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
