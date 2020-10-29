@@ -34,6 +34,8 @@
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
+    "postbuild": "mkdirp ../priv/static && cpx \"./build/**\" \"../priv/static\" --clean",
+    "deploy": "npm run build && npm run postbuild",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch:css": "postcss src/css/tailwind.css -o src/css/main.css",
@@ -57,6 +59,8 @@
   },
   "devDependencies": {
     "autoprefixer": "9.8.6",
+    "cpx": "^1.5.0",
+    "mkdirp": "^1.0.4",
     "postcss-cli": "^8.1.0",
     "tailwindcss": "^1.9.4"
   }

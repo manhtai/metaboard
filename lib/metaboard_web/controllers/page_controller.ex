@@ -1,7 +1,8 @@
 defmodule MetaboardWeb.PageController do
   use MetaboardWeb, :controller
 
+  @spec index(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def index(conn, _params) do
-    render(conn, "index.html")
+    html(conn, File.read!("priv/static/index.html"))
   end
 end
