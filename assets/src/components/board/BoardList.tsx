@@ -20,7 +20,7 @@ import {Board} from '../../types'
 function EmptyBoard({ isSearching = false }: { isSearching?: boolean }) {
   return (
     <div className="block px-6 py-3 mx-3 my-4 text-center bg-gray-100 border-2 border-dashed rounded-lg">
-      { isSearching ? "No boards found." : "You don't have any board yet." }
+      { isSearching ? "No boards were found." : "You have not created any board yet." }
     </div>
   )
 }
