@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {useBoards} from './BoardProvider'
 import {Board} from '../../types'
+import Loading from '../common/Loading'
 
 
 function EmptyBoard({ isSearching = false }: { isSearching?: boolean }) {
@@ -48,7 +49,7 @@ export default function AllBoards(props: RouteComponentProps) {
   const [loading, setLoading] = useState(true)
 
   const [showCreateModal, setShowCreateModal] = React.useState(false)
-  const { fetchAllBoards, onCreateBoard, saving, board, errorMessage } = useBoards()
+  const { fetchAllBoards, onCreateBoard, saving, board, errorMessage, currentUser } = useBoards()
 
   const searchBoards = useCallback(
     debounce((term) => {
@@ -74,6 +75,10 @@ export default function AllBoards(props: RouteComponentProps) {
     const term = event.target.value
     setSearchTerm(term)
     searchBoards(term)
+  }
+
+  if (!currentUser) {
+    return <Loading />
   }
 
 

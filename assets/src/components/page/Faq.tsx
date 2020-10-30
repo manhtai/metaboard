@@ -31,16 +31,8 @@ export default function FaqPage() {
       answer: "Yes it is, for as long as you like.",
     },
     {
-      question: "How do you pay for its costs?",
-      answer: "We pay with our own money for now. If you want to support us, upgrade to a Pro account will compensate us best.",
-    },
-    {
       question: "Is this open source?",
       answer: "Yes it is!",
-    },
-    {
-      question: "Who are behind this?",
-      answer: "I am an one-man developer from Vietnam. Glad to meet you, too!",
     },
   ]
 
