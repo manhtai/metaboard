@@ -11,6 +11,7 @@ defmodule Metaboard.Boards do
     |> where(user_id: ^user_id)
     |> where(^filter_where(params))
     |> order_by(desc: :updated_at)
+    |> limit(100)
     |> Repo.all()
   end
 

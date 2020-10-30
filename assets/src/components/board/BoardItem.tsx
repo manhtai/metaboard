@@ -9,7 +9,7 @@ export default function BoardItem(props: Board) {
   return (
     <>
       <Link
-        className="block px-6 py-3 mx-3 my-4 bg-gray-200 rounded-lg shadow cursor-pointer hover:shadow-lg hover:bg-gray-200"
+        className="block px-6 py-3 mx-3 my-4 bg-gray-200 border border-gray-300 rounded-lg shadow cursor-pointer hover:shadow-lg hover:bg-gray-200"
         to={"/boards/" + props.id}
       >
         <div className="flex flex-row justify-between">

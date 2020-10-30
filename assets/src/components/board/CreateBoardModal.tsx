@@ -116,10 +116,8 @@ export default class CreateBoardModal extends React.Component<Props, State> {
                             className="block w-full px-2 py-3 leading-tight border border-gray-400 rounded-sm appearance-none focus:outline-none focus:bg-white focus:border-blue-500"
                             onChange={this.handleChangeType}
                             value={type}
-                            disabled
                           >
                             <option value="leaderboard">Leaderboard</option>
-                            <option value="scoreboard">Scoreboard</option>
                             <option value="counter">Counter</option>
                           </select>
                           <div className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700 bg-gray-300 border border-gray-400 rounded-r-sm pointer-events-none">

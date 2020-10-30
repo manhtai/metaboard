@@ -2,7 +2,7 @@ import React from 'react';
 import {Channel, Socket} from 'phoenix';
 import {throttle} from 'lodash';
 
-import LeaderBoard from "./LeaderBoard";
+import BoardDisplay from "./BoardDisplay";
 import Loading from "../common/Loading";
 import {Board} from "../../types"
 import {SOCKET_URL} from '../../socket';
@@ -83,7 +83,7 @@ export default class BoardSharing extends React.Component<Props, State> {
     const { loading, board } = this.state
     return (
       <>
-        { loading ? <Loading /> : board && <LeaderBoard {...board} />}
+        { loading ? <Loading /> : board && <BoardDisplay {...board} />}
       </>
     )
   }

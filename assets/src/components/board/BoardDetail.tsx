@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react';
 
 import Navbar from "./BoardNav";
-import LeaderBoard from "./LeaderBoard";
+import BoardDisplay from "./BoardDisplay";
 import {Player} from "../../types"
 import {RouteComponentProps} from 'react-router-dom';
 import Loading from "../common/Loading";
@@ -91,9 +91,9 @@ type State = {
   name: string;
   code: string;
   type: string;
+  items: any[];
   sortName: number;
   sortScore: number;
-  items: any[];
 }
 
 export default function BoardDetail(props: Props) {
@@ -270,10 +270,8 @@ export default function BoardDetail(props: Props) {
                     value={state.type}
                     onChange={handleChangeType}
                     required
-                    disabled
                   >
                     <option value="leaderboard">Leaderboard</option>
-                    <option value="scoreboard">Scoreboard</option>
                     <option value="counter">Counter</option>
                   </select>
                   <div className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700 bg-gray-300 border border-gray-400 rounded-r-sm pointer-events-none">
@@ -329,7 +327,7 @@ export default function BoardDetail(props: Props) {
               </div>
             </div>
           </div>
-          {board && <LeaderBoard {...board} />}
+          {board && <BoardDisplay {...board} />}
         </div>
       </section>)}
     </>)
