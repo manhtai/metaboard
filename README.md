@@ -3,7 +3,7 @@
 > Dead simple real time boards
 
 
-Demo: https://metaboard.gigalixirapp.com
+Demo: https://metaboard.net/s/demo
 
 
 ## Stacks

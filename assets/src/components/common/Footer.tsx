@@ -11,7 +11,7 @@ export default function Footer() {
                 Let's keep in touch!
               </h4>
               <h5 className="mt-0 mb-2 text-lg text-gray-700">
-                Drop us an email at hi@metaretro.com
+                Drop us an email at <a href="mailto:hi@metaboard.net">hi@metaboard.net</a>
               </h5>
             </div>
             <div className="w-full px-4 lg:w-6/12">
