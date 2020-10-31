@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="863px" height="355px" viewBox="0 0 863 355" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>counter</title>
+    <defs>
+        <filter x="-2.0%" y="-5.2%" width="104.1%" height="110.3%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Score" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="counter" filter="url(#filter-1)" transform="translate(13.000000, 13.000000)">
+            <g id="Group-2" transform="translate(301.000000, 0.000000)" stroke="#ECC94B">
+                <rect id="Rectangle" fill="#ECC94B" x="-0.5" y="-0.5" width="236" height="330" rx="20"></rect>
+                <path d="M234.5,72.5 L234.5,309 C234.5,314.384776 232.317388,319.259776 228.788582,322.788582 C225.259776,326.317388 220.384776,328.5 215,328.5 L215,328.5 L20,328.5 C14.6152237,328.5 9.74022369,326.317388 6.21141777,322.788582 C2.68261184,319.259776 0.5,314.384776 0.5,309 L0.5,309 L0.5,72.5 L234.5,72.5 Z" id="Rectangle" fill="#FFFFF0"></path>
+            </g>
+            <g id="Group-2" stroke="#4299E1">
+                <rect id="Rectangle" fill="#4299E1" x="-0.5" y="-0.5" width="236" height="330" rx="20"></rect>
+                <path d="M234.5,72.5 L234.5,309 C234.5,314.384776 232.317388,319.259776 228.788582,322.788582 C225.259776,326.317388 220.384776,328.5 215,328.5 L215,328.5 L20,328.5 C14.6152237,328.5 9.74022369,326.317388 6.21141777,322.788582 C2.68261184,319.259776 0.5,314.384776 0.5,309 L0.5,309 L0.5,72.5 L234.5,72.5 Z" id="Rectangle" fill="#EBF8FF"></path>
+            </g>
+            <g id="Group" transform="translate(602.000000, 0.000000)" stroke="#48BB78">
+                <rect id="Rectangle" fill="#48BB78" x="-0.5" y="-0.5" width="236" height="330" rx="20"></rect>
+                <path d="M234.5,72.5 L234.5,309 C234.5,314.384776 232.317388,319.259776 228.788582,322.788582 C225.259776,326.317388 220.384776,328.5 215,328.5 L215,328.5 L20,328.5 C14.6152237,328.5 9.74022369,326.317388 6.21141777,322.788582 C2.68261184,319.259776 0.5,314.384776 0.5,309 L0.5,309 L0.5,72.5 L234.5,72.5 Z" id="Rectangle" fill="#F0FFF4"></path>
+            </g>
+        </g>
+    </g>
+</svg>

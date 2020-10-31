@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="442px" height="285px" viewBox="0 0 442 285" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>leaderboard</title>
+    <defs>
+        <filter x="-2.8%" y="-25.0%" width="105.7%" height="150.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-2.8%" y="-25.0%" width="105.7%" height="150.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-2.8%" y="-25.0%" width="105.7%" height="150.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Boards" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="leaderboard" transform="translate(9.000000, 9.000000)">
+            <g id="Group" filter="url(#filter-1)">
+                <rect id="Rectangle" fill="#F1F1F1" x="60" y="0" width="364" height="48" rx="4"></rect>
+                <rect id="Rectangle" fill="#4299E1" x="60" y="0" width="318" height="48" rx="4"></rect>
+                <circle id="Oval" fill="#F1F1F1" cx="24" cy="24" r="24"></circle>
+            </g>
+            <g id="Group-Copy" filter="url(#filter-2)" transform="translate(0.000000, 76.000000)">
+                <rect id="Rectangle" fill="#F1F1F1" x="60" y="0" width="364" height="48" rx="4"></rect>
+                <rect id="Rectangle" fill="#ECC94B" x="60" y="0" width="249" height="48" rx="4"></rect>
+                <circle id="Oval" fill="#F1F1F1" cx="24" cy="24" r="24"></circle>
+            </g>
+            <g id="Group-Copy" filter="url(#filter-3)" transform="translate(0.000000, 152.000000)">
+                <rect id="Rectangle" fill="#F1F1F1" x="60" y="0" width="364" height="48" rx="4"></rect>
+                <rect id="Rectangle" fill-opacity="0.93" fill="#48BB78" x="60" y="0" width="139" height="48" rx="4"></rect>
+                <circle id="Oval" fill="#F1F1F1" cx="24" cy="24" r="24"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

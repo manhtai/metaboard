@@ -3,6 +3,8 @@ import React from "react";
 import Navbar from "../common/Navbar";
 import Footer from "../common/Footer";
 import { Link } from "react-router-dom"
+import Leaderboard from '../../img/leaderboard.svg'
+import Counter from '../../img/counter.svg'
 
 import {
   faStopwatch,
@@ -36,8 +38,8 @@ export default function Landing() {
           </div>
           <div className="container relative mx-auto">
               <div className="flex flex-wrap items-center">
-                <div className="w-full px-4 ml-auto mr-auto text-center text-white lg:w-6/12">
-                  <div className="pr-12">
+                <div className="w-full px-4 ml-auto mr-auto text-white lg:w-6/12">
+                  <div className="text-center">
                     <h1 className="text-5xl font-semibold">
                       Welcome to Metaboard!
                     </h1>
@@ -76,7 +78,7 @@ export default function Landing() {
               <div className="w-full px-4 pt-6 text-center lg:pt-12 md:w-4/12">
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
-                    <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-red-400 rounded-full shadow-lg">
+                    <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-blue-500 rounded-full shadow-lg">
                       <FontAwesomeIcon icon={faPaperPlane} />
                     </div>
                     <h6 className="text-xl font-semibold">Simple</h6>
@@ -90,7 +92,7 @@ export default function Landing() {
               <div className="w-full px-4 text-center md:w-4/12">
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
-                    <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-blue-400 rounded-full shadow-lg">
+                    <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-yellow-500 rounded-full shadow-lg">
                       <FontAwesomeIcon icon={faGlobeAfrica} />
                     </div>
                     <h6 className="text-xl font-semibold">
@@ -106,7 +108,7 @@ export default function Landing() {
               <div className="w-full px-4 text-center lg:pt-6 md:w-4/12">
                 <div className="relative flex flex-col w-full min-w-0 mb-8 break-words bg-white rounded-lg shadow-lg">
                   <div className="flex-auto px-4 py-5">
-                    <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-green-400 rounded-full shadow-lg">
+                    <div className="inline-flex items-center justify-center w-12 h-12 p-3 mb-5 text-center text-white bg-green-500 rounded-full shadow-lg">
                       <FontAwesomeIcon icon={faHandPeace} />
                     </div>
                     <h6 className="text-xl font-semibold">
@@ -124,7 +126,7 @@ export default function Landing() {
             <div className="flex flex-wrap items-center lg:mt-32 sm:mt-20">
               <div className="w-full px-4 ml-auto mr-auto md:w-5/12">
                 <h3 className="mb-2 text-3xl font-semibold leading-normal">
-                  Keep track of Group Leaderboards.
+                  Keep track of group leaderboards
                 </h3>
                 <p className="mt-4 mb-4 text-lg font-light leading-relaxed text-gray-700">
                   Easy to show off everyone's progress. In real time.
@@ -135,8 +137,8 @@ export default function Landing() {
                 <div className="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white bg-blue-600 rounded-lg shadow-lg">
                   <img
                     alt="..."
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
-                    className="w-full align-middle rounded-t-lg"
+                    src={Leaderboard}
+                    className="w-full p-10 align-middle bg-gray-200 rounded-t-lg"
                   />
                   <blockquote className="relative p-8 mb-4">
                     <svg
@@ -158,9 +160,6 @@ export default function Landing() {
                       Suitable for classes, colleagues, friends and families
                       to keep informed about one another.
                     </h4>
-                    <p className="mt-2 font-light text-white text-md">
-                      Always know when the game order just changed.
-                    </p>
                   </blockquote>
                 </div>
               </div>
@@ -195,14 +194,14 @@ export default function Landing() {
               <div className="w-full px-4 ml-auto mr-auto md:w-4/12">
                 <img
                   alt="..."
-                  className="max-w-full rounded-lg shadow-lg"
-                  src="https://images.unsplash.com/photo-1541731032492-ec2d84d30308?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                  className="max-w-full p-10 mb-10 bg-gray-200 rounded-lg shadow-lg"
+                  src={Counter}
                 />
               </div>
               <div className="w-full px-4 ml-auto mr-auto md:w-5/12">
                 <div className="md:pr-12">
                   <h3 className="text-3xl font-semibold">
-                    You keep gaining score, we keep showing it.
+                    You keep gaining score, we keep showing it
                   </h3>
                   <p className="mt-4 text-lg leading-relaxed text-gray-600">
                     Get the game on!

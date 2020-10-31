@@ -111,7 +111,7 @@ class SignUp extends React.Component<Props, State> {
           <section className="absolute w-full h-full">
             <div className="container h-full px-4 mx-auto">
               <div className="flex items-center content-center justify-center h-full">
-                <div className="w-full max-w-md -mt-20">
+                <div className="w-full max-w-md">
                   <div className="relative flex flex-col w-full min-w-0 mb-6 break-words">
                     <h1 className="flex-auto p-2 text-3xl font-bold text-center">
                       Create your account
@@ -127,7 +127,7 @@ class SignUp extends React.Component<Props, State> {
                           </div>
                           <input
                             type="email"
-                            className="flex-1 w-full px-3 py-3 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-r-sm focus:outline-none focus:border-blue-500"
+                            className="flex-1 w-full px-3 py-3 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-l-none rounded-r-sm appearance-none focus:outline-none focus:border-blue-500"
                             placeholder="Email"
                             value={email}
                             onChange={this.handleChangeEmail}
@@ -141,7 +141,7 @@ class SignUp extends React.Component<Props, State> {
                           </div>
                           <input
                             type="password"
-                            className="flex-1 w-full px-3 py-3 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-r-sm focus:outline-none focus:border-blue-500"
+                            className="flex-1 w-full px-3 py-3 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-l-none rounded-r-sm appearance-none focus:outline-none focus:border-blue-500"
                             placeholder="Password"
                             value={password}
                             onChange={this.handleChangePassword}
