@@ -1,10 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import LandingPage from './components/landing/Landing';
 import LoginPage from './components/auth/Login';
 import SignupPage from './components/auth/Signup';
 import FaqPage from './components/page/Faq';
+import NotFound from './components/page/NotFound';
 
 import BoardSharing from './components/board/BoardSharing';
 import BoardWrapper from './components/board/BoardWrapper';
@@ -22,6 +23,7 @@ function App() {
     return (
       <BrowserRouter>
         <Switch>
+          <Route path="/404" component={NotFound} />
           <Route path="/landing" component={LandingPage} />
           <Route path="/faq" component={FaqPage} />
 
@@ -39,6 +41,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route path="/404" component={NotFound} />
         <Route path="/landing" component={LandingPage} />
         <Route path="/faq" component={FaqPage} />
 
@@ -49,7 +52,6 @@ function App() {
       </Switch>
     </BrowserRouter>
   );
-
 }
 
 export default App;

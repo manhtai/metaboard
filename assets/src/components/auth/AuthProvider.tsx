@@ -145,4 +145,3 @@ export class AuthProvider extends React.Component<Props, State> {
     );
   }
 }
-

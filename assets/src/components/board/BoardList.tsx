@@ -1,29 +1,27 @@
 import React, {useEffect, useState, useCallback} from 'react';
 
-import Navbar from "./BoardNav";
-import BoardItem from "./BoardItem";
-import CreateBoardModal from "./CreateBoardModal";
+import Navbar from './BoardNav';
+import BoardItem from './BoardItem';
+import CreateBoardModal from './CreateBoardModal';
 import {RouteComponentProps} from 'react-router-dom';
-import {debounce} from "lodash"
+import {debounce} from 'lodash';
 
-import {
-  faPlus,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faSearch} from '@fortawesome/free-solid-svg-icons';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import {useBoards} from './BoardProvider'
-import {Board} from '../../types'
-import Loading from '../common/Loading'
+import {useBoards} from './BoardProvider';
+import {Board} from '../../types';
+import Loading from '../common/Loading';
 
-
-function EmptyBoard({ isSearching = false }: { isSearching?: boolean }) {
+function EmptyBoard({isSearching = false}: {isSearching?: boolean}) {
   return (
     <div className="block px-6 py-3 mx-3 my-4 text-center bg-gray-100 border-2 border-dashed rounded-lg">
-      { isSearching ? "No boards were found." : "You have not created any board yet." }
+      {isSearching
+        ? 'No boards were found.'
+        : 'You have not created any board yet.'}
     </div>
-  )
+  );
 }
 
 function LoadingBoard() {
@@ -39,52 +37,56 @@ function LoadingBoard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-
 export default function AllBoards(props: RouteComponentProps) {
-  const [boards, setBoards] = useState<Board[]>([])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [loading, setLoading] = useState(true)
+  const [boards, setBoards] = useState<Board[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const [showCreateModal, setShowCreateModal] = React.useState(false)
-  const { fetchAllBoards, onCreateBoard, saving, board, errorMessage, currentUser } = useBoards()
+  const [showCreateModal, setShowCreateModal] = React.useState(false);
+  const {
+    fetchAllBoards,
+    onCreateBoard,
+    saving,
+    board,
+    errorMessage,
+    currentUser,
+  } = useBoards();
 
   const searchBoards = useCallback(
     debounce((term) => {
-      setLoading(true)
+      setLoading(true);
       fetchAllBoards(term).then((boards) => {
-        setBoards(boards)
-        setLoading(false)
-      })
-   }, 1000),
-    [],
-  )
+        setBoards(boards);
+        setLoading(false);
+      });
+    }, 1000),
+    []
+  );
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     fetchAllBoards().then((boards) => {
-      setBoards(boards)
-      setLoading(false)
-    })
-  }, [fetchAllBoards])
-
+      setBoards(boards);
+      setLoading(false);
+    });
+  }, [fetchAllBoards]);
 
   const handleSearch = (event: any) => {
-    const term = event.target.value
-    setSearchTerm(term)
-    searchBoards(term)
-  }
+    const term = event.target.value;
+    setSearchTerm(term);
+    searchBoards(term);
+  };
 
   if (!currentUser) {
-    return <Loading />
+    return <Loading />;
   }
-
 
   return (
     <>
-      <Navbar type={"list"} />
+      <Navbar type={'list'} />
       <section className="container relative flex items-center content-center justify-center pt-8 pb-16 mx-auto">
         <div className="w-full mt-16 max-w-screen-md">
           <div className="flex flex-row flex-wrap justify-between mx-3 mb-10">
@@ -101,7 +103,7 @@ export default function AllBoards(props: RouteComponentProps) {
                 <FontAwesomeIcon icon={faSearch} />
               </div>
               <input
-                className="flex-1 w-full px-2 py-1 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-r-sm focus:outline-none focus:border-blue-500"
+                className="flex-1 w-full px-2 py-1 text-gray-700 placeholder-gray-700 bg-white border border-gray-400 rounded-l-none rounded-r-sm appearance-none focus:outline-none focus:border-blue-500"
                 placeholder="Type to search..."
                 value={searchTerm}
                 onChange={handleSearch}
@@ -109,11 +111,13 @@ export default function AllBoards(props: RouteComponentProps) {
             </div>
           </div>
           <div>
-            {
-              loading ? <LoadingBoard />
-              : boards.length ? boards.map(d => <BoardItem {...d} key={d.id} />)
-              : <EmptyBoard isSearching={searchTerm.length > 0} />
-            }
+            {loading ? (
+              <LoadingBoard />
+            ) : boards.length ? (
+              boards.map((d) => <BoardItem {...d} key={d.id} />)
+            ) : (
+              <EmptyBoard isSearching={searchTerm.length > 0} />
+            )}
           </div>
         </div>
       </section>
@@ -128,5 +132,5 @@ export default function AllBoards(props: RouteComponentProps) {
         onOk={() => setShowCreateModal(false)}
       />
     </>
-  )
+  );
 }

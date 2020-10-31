@@ -2,8 +2,7 @@ import React, {useContext} from 'react';
 import * as API from '../../api';
 import logger from '../../logger';
 import {Board} from '../../types';
-import {parseResponseErrors} from '../../util'
-
+import {parseResponseErrors} from '../../util';
 
 export const BoardContext = React.createContext<{
   fetching: boolean;
@@ -31,10 +30,9 @@ export const BoardContext = React.createContext<{
   onCreateBoard: () => {},
   fetchAllBoards: () => Promise.resolve([]),
   fetchBoardById: () => Promise.resolve(),
-})
+});
 
-export const useBoards = () => useContext(BoardContext)
-
+export const useBoards = () => useContext(BoardContext);
 
 type Props = React.PropsWithChildren<{}>;
 type State = {
@@ -44,8 +42,7 @@ type State = {
   board: any;
   errors: null;
   errorMessage: string;
-}
-
+};
 
 export class BoardProvider extends React.Component<Props, State> {
   state: State = {
@@ -55,15 +52,15 @@ export class BoardProvider extends React.Component<Props, State> {
     errorMessage: '',
     board: null,
     currentUser: null,
-  }
+  };
 
   async componentDidMount() {
-    const currentUser = await API.me()
-    this.setState({ currentUser })
+    const currentUser = await API.me();
+    this.setState({currentUser});
   }
 
   handleCreateBoard = async (params: any) => {
-    const { board } = this.state
+    const {board} = this.state;
 
     this.setState({
       board: {
@@ -73,20 +70,20 @@ export class BoardProvider extends React.Component<Props, State> {
       saving: true,
       errorMessage: '',
       errors: null,
-    })
+    });
 
     try {
-      const board = await API.createBoard({ board: params })
-      this.setState({ board, saving: false })
+      const board = await API.createBoard({board: params});
+      this.setState({board, saving: false});
     } catch (err) {
-      const [errorMessage, errors] = parseResponseErrors(err)
-      this.setState({ board, errors, errorMessage, saving: false })
-      logger.error(err)
+      const [errorMessage, errors] = parseResponseErrors(err);
+      this.setState({board, errors, errorMessage, saving: false});
+      logger.error(err);
     }
-  }
+  };
 
   handleUpdateBoard = async (boardId: string, params: any) => {
-    const { board } = this.state
+    const {board} = this.state;
 
     this.setState({
       board: {
@@ -96,34 +93,33 @@ export class BoardProvider extends React.Component<Props, State> {
       saving: true,
       errorMessage: '',
       errors: null,
-    })
+    });
 
     try {
       const board = await API.updateBoard(boardId, {
         board: params,
-      })
-      this.setState({ board, saving: false })
+      });
+      this.setState({board, saving: false});
     } catch (err) {
-      const [errorMessage, errors] = parseResponseErrors(err)
-      this.setState({ board, errors, errorMessage, saving: false })
-      logger.error(err)
+      const [errorMessage, errors] = parseResponseErrors(err);
+      this.setState({board, errors, errorMessage, saving: false});
+      logger.error(err);
     }
-  }
+  };
 
   fetchAllBoards = async (searchTerm: string = '') => {
-    this.setState({ fetching: true })
-    const boards = await API.fetchAllBoards(searchTerm)
-    this.setState({ fetching: false })
-    return boards
-  }
+    this.setState({fetching: true, board: null});
+    const boards = await API.fetchAllBoards(searchTerm);
+    this.setState({fetching: false});
+    return boards;
+  };
 
   fetchBoardById = async (boardId: string) => {
-    this.setState({ fetching: true })
-    const board = await API.fetchBoardById(boardId)
-    this.setState({ fetching: false, board })
-    return board
-  }
-
+    this.setState({fetching: true});
+    const board = await API.fetchBoardById(boardId);
+    this.setState({fetching: false, board});
+    return board;
+  };
 
   render() {
     const {
@@ -133,26 +129,26 @@ export class BoardProvider extends React.Component<Props, State> {
       board,
       errors,
       errorMessage,
-    } = this.state
+    } = this.state;
 
     return (
       <BoardContext.Provider
         value={{
-            fetching,
-            saving,
-            currentUser,
-            board,
-            errors,
-            errorMessage,
+          fetching,
+          saving,
+          currentUser,
+          board,
+          errors,
+          errorMessage,
 
-            onUpdateBoard: this.handleUpdateBoard,
-            onCreateBoard: this.handleCreateBoard,
-            fetchBoardById: this.fetchBoardById,
-            fetchAllBoards: this.fetchAllBoards,
+          onUpdateBoard: this.handleUpdateBoard,
+          onCreateBoard: this.handleCreateBoard,
+          fetchBoardById: this.fetchBoardById,
+          fetchAllBoards: this.fetchAllBoards,
         }}
       >
         {this.props.children}
       </BoardContext.Provider>
-    )
+    );
   }
 }

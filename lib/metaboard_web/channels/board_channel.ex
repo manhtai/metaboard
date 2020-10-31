@@ -11,7 +11,7 @@ defmodule MetaboardWeb.BoardChannel do
         send(self(), :after_join)
         {:ok, socket}
 
-      _ -> {:error, %{reason: "Wrong code"}}
+      _ -> {:error, %{message: "Wrong code", code: 404}}
     end
   end
 

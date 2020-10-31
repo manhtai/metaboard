@@ -2,7 +2,6 @@ import request from 'superagent';
 import {getAuthTokens} from './storage';
 import {User} from './types';
 
-
 export type LoginParams = {
   email: string;
   password: string;
@@ -27,10 +26,7 @@ export const getRefreshToken = (): string | null => {
   return (tokens && tokens.renew_token) || null;
 };
 
-export const register = async ({
-  email,
-  password,
-}: RegisterParams) => {
+export const register = async ({email, password}: RegisterParams) => {
   return request
     .post(`/api/registration`)
     .send({
@@ -41,8 +37,7 @@ export const register = async ({
       },
     })
     .then((res) => res.body.data);
-}
-
+};
 
 export const login = async ({email, password}: LoginParams) => {
   return request
@@ -50,7 +45,6 @@ export const login = async ({email, password}: LoginParams) => {
     .send({user: {email, password}})
     .then((res) => res.body.data);
 };
-
 
 export const me = async (token = getAccessToken()): Promise<User> => {
   if (!token) {
@@ -63,7 +57,6 @@ export const me = async (token = getAccessToken()): Promise<User> => {
     .then((res) => res.body.data);
 };
 
-
 export const renew = async (token = getRefreshToken()) => {
   if (!token) {
     throw new Error('Invalid token!');
@@ -75,11 +68,9 @@ export const renew = async (token = getRefreshToken()) => {
     .then((res) => res.body.data);
 };
 
-
 export const logout = async () => {
   return request.delete(`/api/session`).then((res) => res.body);
 };
-
 
 export const fetchAllBoards = async (
   searchTerm: string = '',
@@ -89,30 +80,22 @@ export const fetchAllBoards = async (
     throw new Error('Invalid token!');
   }
 
-  const path = searchTerm ? `/api/boards?q=${searchTerm}` : `/api/boards`
+  const path = searchTerm ? `/api/boards?q=${searchTerm}` : `/api/boards`;
 
   return request
     .get(path)
     .set('Authorization', token)
     .then((res) => res.body.data);
-}
+};
 
-
-export const fetchBoardById = async (
-  id: string,
-  token = getAccessToken()
-) => {
-
+export const fetchBoardById = async (id: string, token = getAccessToken()) => {
   return request
     .get(`/api/boards/${id}`)
     .set('Authorization', token || '')
     .then((res) => res.body.data);
-}
+};
 
-export const createBoard = async (
-  data: any,
-  token = getAccessToken()
-) => {
+export const createBoard = async (data: any, token = getAccessToken()) => {
   if (!token) {
     throw new Error('Invalid token!');
   }
@@ -122,7 +105,7 @@ export const createBoard = async (
     .set('Authorization', token)
     .send(data)
     .then((res) => res.body.data);
-}
+};
 
 export const updateBoard = async (
   id: string,
@@ -138,4 +121,4 @@ export const updateBoard = async (
     .set('Authorization', token)
     .send(updates)
     .then((res) => res.body.data);
-}
+};

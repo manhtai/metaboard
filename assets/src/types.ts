@@ -5,11 +5,11 @@ export type User = {
 };
 
 export type Player = {
-  id: string,
-  name: string,
-  score: number,
-  percentage?: string,
-}
+  id: string;
+  name: string;
+  score: number;
+  percentage?: string;
+};
 
 export type Board = {
   id: string;
@@ -19,5 +19,5 @@ export type Board = {
   updated_at: number;
   created_at: number;
   max_score?: number;
-  items: any[],
+  items: any[];
 };
