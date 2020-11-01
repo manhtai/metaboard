@@ -4,9 +4,16 @@ const plugin = require('tailwindcss/plugin')
 module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
+    purgeLayersByDefault: true,
   },
-  purge: [],
+  purge: {
+    content: [
+      "./src/**/*.{ts,tsx,html}",
+    ],
+    options: {
+      whitelistPatterns: [/^bg-/, /^text-/],
+    },
+  },
   theme: {
     extend: {
       fontFamily: {
