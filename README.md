@@ -3,7 +3,7 @@
 > Dead simple real time boards
 
 
-Demo: https://metaboard.net/s/demo
+Demo: https://meta-board.herokuapp.com/s/demo
 
 
 ## Stacks
@@ -14,7 +14,7 @@ Demo: https://metaboard.net/s/demo
 
 - UI framework: TailwindCSS
 
-- Hosting: Gigalixir
+- Hosting: Heroku
 
 
 ## Development setup
